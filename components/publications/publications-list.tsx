@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, FileText, Star, Quote, ChevronDown, Loader2 } from "lucide-react"
 import { usePublications } from "./publications-context"
-import { FadeIn, StaggerContainer } from "@/components/motion"
+import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/motion"
 
 export function PublicationsList() {
   const {
@@ -47,7 +47,7 @@ export function PublicationsList() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
           Showing {displayedPublications.length} of {filteredPublications.length} publications ({totalCount} total) •
@@ -69,7 +69,7 @@ export function PublicationsList() {
           <p className="text-muted-foreground">No publications match your current filters.</p>
           <Button
             variant="outline"
-            className="mt-4 bg-transparent"
+            className="mt-4 glass-secondary"
             onClick={() =>
               setFilterState({
                 searchQuery: "",
@@ -86,94 +86,97 @@ export function PublicationsList() {
           </Button>
         </div>
       ) : (
-        <StaggerContainer className="space-y-4">
+        <StaggerContainer className="card-grid">
           {displayedPublications.map((publication, index) => (
-            <FadeIn key={index}>
-              <GlassCard className="p-6 space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2 flex-1">
-                    <div className="flex items-center space-x-2">
-                      {publication.featured && (
-                        <Star className="h-4 w-4 text-accent fill-current" aria-label="Featured publication" />
-                      )}
-                      <h3 className="text-lg font-semibold text-balance leading-tight">{publication.title}</h3>
-                    </div>
+            <StaggerItem key={index}>
+              <HoverLift>
+                <GlassCard className="glass-primary card-spacing space-y-4 glow-hover">
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center space-x-2">
+                          {publication.featured && (
+                            <Star className="h-4 w-4 text-accent fill-current" aria-label="Featured publication" />
+                          )}
+                          <h3 className="text-headline priority-1 leading-tight">{publication.title}</h3>
+                        </div>
 
-                    <p className="text-sm text-muted-foreground">{publication.authors.join(", ")}</p>
+                        <p className="text-sm text-muted-foreground">{publication.authors.join(", ")}</p>
 
-                    <div className="flex items-center space-x-2 text-sm">
-                      <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
-                        {publication.venue}
-                      </Badge>
-                      <span className="text-muted-foreground">•</span>
-                      <span className="text-muted-foreground">{publication.year}</span>
-                      {publication.citations && (
-                        <>
+                        <div className="flex items-center space-x-2 text-sm">
+                          <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
+                            {publication.venue}
+                          </Badge>
                           <span className="text-muted-foreground">•</span>
-                          <span className="text-muted-foreground">Cited by {publication.citations}</span>
-                        </>
-                      )}
+                          <span className="text-muted-foreground">{publication.year}</span>
+                          {publication.citations && (
+                            <>
+                              <span className="text-muted-foreground">•</span>
+                              <span className="text-muted-foreground">Cited by {publication.citations}</span>
+                            </>
+                          )}
+                        </div>
+
+                        {publication.topic && (
+                          <div className="flex flex-wrap gap-1">
+                            <Badge variant="secondary" className="text-xs">{publication.topic}</Badge>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
-                    {publication.topic && (
-                      <div className="flex flex-wrap gap-1">
-                        <Badge variant="secondary" className="text-xs">{publication.topic}</Badge>
+                    <p className="text-body priority-3 leading-relaxed text-pretty">{publication.abstract}</p>
+
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center space-x-2">
+                        {publication.pdfUrl && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="glass-secondary text-accent hover:text-accent-foreground"
+                          >
+                            <FileText className="mr-1 h-3 w-3" />
+                            PDF
+                          </Button>
+                        )}
+                        {publication.doi && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="glass-secondary text-accent hover:text-accent-foreground"
+                          >
+                            <ExternalLink className="mr-1 h-3 w-3" />
+                            DOI
+                          </Button>
+                        )}
+                        {publication.bibtex && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => copyBibTeX(publication.bibtex!)}
+                            className="glass-secondary text-muted-foreground hover:text-accent"
+                          >
+                            <Quote className="mr-1 h-3 w-3" />
+                            BibTeX
+                          </Button>
+                        )}
                       </div>
-                    )}
-                  </div>
 
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <div className="flex items-center space-x-2">
-                    {publication.pdfUrl && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-accent hover:text-accent-foreground hover:bg-accent/10"
-                      >
-                        <FileText className="mr-1 h-3 w-3" />
-                        PDF
-                      </Button>
-                    )}
-                    {publication.doi && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-accent hover:text-accent-foreground hover:bg-accent/10"
-                      >
-                        <ExternalLink className="mr-1 h-3 w-3" />
-                        DOI
-                      </Button>
-                    )}
-                    {publication.bibtex && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyBibTeX(publication.bibtex!)}
-                        className="text-muted-foreground hover:text-accent"
-                      >
-                        <Quote className="mr-1 h-3 w-3" />
-                        BibTeX
-                      </Button>
-                    )}
+                      <div className="text-xs text-muted-foreground">
+                        {publication.type} • Impact Factor: {publication.impactFactor || "N/A"}
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="text-xs text-muted-foreground">
-                    {publication.type} • Impact Factor: {publication.impactFactor || "N/A"}
-                  </div>
-                </div>
-              </div>
-              </GlassCard>
-            </FadeIn>
+                </GlassCard>
+              </HoverLift>
+            </StaggerItem>
           ))}
         </StaggerContainer>
       )}
 
       {filteredPublications.length > 0 && hasMore && (
         <div className="text-center py-8">
-          <Button variant="outline" className="glow-hover bg-transparent" onClick={loadMore} disabled={isLoading}>
+          <Button variant="outline" className="glass-secondary glow-hover" onClick={loadMore} disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Menu, X } from "lucide-react"
+import { HoverLift, GlowOnHover } from "@/components/motion"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import List from "@mui/material/List"
@@ -30,16 +31,18 @@ export function Navigation() {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 glass">
-      <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 glass-strong">
+      <div className="container mx-auto max-w-6xl container-padding">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 group">
-            <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/40 bg-gradient-to-br from-accent/20 to-transparent overflow-hidden">
-              <span className="absolute inset-0 blur-md opacity-30" style={{ boxShadow: "0 0 24px 8px rgba(66,232,224,0.35)" }} />
-              <img src="/brand-logo.svg" alt="MEF Logo" className="relative h-5 w-5 opacity-90 transition-opacity group-hover:opacity-100" />
-            </span>
+            <GlowOnHover>
+              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/40 bg-gradient-to-br from-accent/20 to-transparent overflow-hidden">
+                <span className="absolute inset-0 blur-md opacity-30" style={{ boxShadow: "0 0 24px 8px rgba(66,232,224,0.35)" }} />
+                <img src="/brand-logo.svg" alt="MEF Logo" className="relative h-5 w-5 opacity-90 transition-opacity group-hover:opacity-100" />
+              </span>
+            </GlowOnHover>
             <div className="leading-tight">
-              <span className="block text-base sm:text-lg font-bold bg-gradient-to-r from-accent via-accent/70 to-white/80 bg-clip-text text-transparent">
+              <span className="block text-base sm:text-lg font-bold text-gradient-accent">
                 Mohammed E. Fouda
               </span>
               <span className="block text-[11px] sm:text-xs text-muted-foreground">Ph.D., SMIEEE</span>
@@ -48,18 +51,18 @@ export function Navigation() {
 
           <nav className="hidden md:flex items-center space-x-1">
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-accent",
-                  pathname === item.href ? "text-accent" : "text-muted-foreground",
-                )}
-              >
-                {item.name}
-              </Link>
+              <HoverLift key={item.name}>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-accent glass-secondary",
+                    pathname === item.href ? "text-accent glass-primary" : "text-muted-foreground",
+                  )}
+                >
+                  {item.name}
+                </Link>
+              </HoverLift>
             ))}
-          </nav>
 
           <div className="flex items-center space-x-3">
             <div className="md:hidden">
@@ -68,21 +71,25 @@ export function Navigation() {
               </IconButton>
             </div>
             <div className="hidden md:flex items-center space-x-3">
-              <Button asChild variant="outline" size="sm" className="glow-hover bg-transparent">
-                <Link href="/cv/Mohammed_Fouda_CV.pdf" target="_blank">
-                  Download CV
-                </Link>
-              </Button>
-              <Button asChild size="sm" className="glow-hover">
-                <Link href="mailto:fouda@mefouda.me">Email</Link>
-              </Button>
+              <HoverLift>
+                <Button asChild variant="outline" size="sm" className="glass-secondary glow-hover">
+                  <Link href="/cv/Mohammed_Fouda_CV.pdf" target="_blank">
+                    Download CV
+                  </Link>
+                </Button>
+              </HoverLift>
+              <HoverLift>
+                <Button asChild size="sm" className="glass-primary glow-hover">
+                  <Link href="mailto:fouda@mefouda.me">Email</Link>
+                </Button>
+              </HoverLift>
             </div>
           </div>
         </div>
       </div>
 
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <div className="w-72 sm:w-80 glass h-full">
+        <div className="w-72 sm:w-80 glass-strong h-full">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border/40">
             <span className="text-sm text-muted-foreground">Menu</span>
             <IconButton aria-label="Close menu" onClick={() => setOpen(false)} size="small" className="text-foreground">

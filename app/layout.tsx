@@ -43,7 +43,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <Providers>
-          <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(66,232,224,0.12),transparent_60%)]" />
+          <div className="fixed inset-0 -z-10 bg-gradient-to-br from-accent/10 via-transparent to-accent/5 noise-texture opacity-30" />
+          <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(66,232,224,0.15),transparent_70%)]" />
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <PublicationScheduler />
           <Analytics />

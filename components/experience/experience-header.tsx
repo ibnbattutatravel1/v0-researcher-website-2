@@ -13,26 +13,21 @@ export function ExperienceHeader() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="glass rounded-lg p-4 text-center glow-hover">
-            <div className="text-2xl font-bold text-accent">5+</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
+            <div className="text-3xl font-bold text-gradient-accent">5+</div>
             <div className="text-sm text-muted-foreground">Years Industry</div>
           </div>
-          <div className="glass rounded-lg p-4 text-center glow-hover">
-            <div className="text-2xl font-bold text-accent">4.0</div>
+          <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
+            <div className="text-3xl font-bold text-gradient-accent">4.0</div>
             <div className="text-sm text-muted-foreground">PhD GPA</div>
           </div>
-          <div className="glass rounded-lg p-4 text-center glow-hover">
-            <div className="text-2xl font-bold text-accent">15+</div>
+          <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
+            <div className="text-3xl font-bold text-gradient-accent">15+</div>
             <div className="text-sm text-muted-foreground">Courses Taught</div>
           </div>
-          <div className="text-sm text-muted-foreground">PhD GPA</div>
-        </div>
-        <div className="glass rounded-lg p-4 text-center glow-hover">
-          <div className="text-2xl font-bold text-accent">15+</div>
-          <div className="text-sm text-muted-foreground">Courses Taught</div>
         </div>
       </div>
-    </div>
+    </FadeIn>
   )
 }
