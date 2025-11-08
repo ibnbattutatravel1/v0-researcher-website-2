@@ -4,18 +4,27 @@ import * as React from "react"
 import { motion, type Variants, type HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
 
+function useIsMounted() {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+  return mounted
+}
+
 export function FadeIn({
   className,
   delay = 0,
   duration = 0.5,
   children,
 }: React.PropsWithChildren<{ className?: string; delay?: number; duration?: number }>) {
+  const mounted = useIsMounted()
+  if (!mounted) {
+    return <div className={cn(className)}>{children}</div>
+  }
   return (
     <motion.div
       className={cn(className)}
       initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -29,12 +38,15 @@ export function SlideUp({
   duration = 0.6,
   children,
 }: React.PropsWithChildren<{ className?: string; delay?: number; duration?: number }>) {
+  const mounted = useIsMounted()
+  if (!mounted) {
+    return <div className={cn(className)}>{children}</div>
+  }
   return (
     <motion.div
       className={cn(className)}
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -48,6 +60,7 @@ export function StaggerContainer({
   delayChildren = 0.05,
   staggerChildren = 0.05,
 }: React.PropsWithChildren<{ className?: string; delayChildren?: number; staggerChildren?: number }>) {
+  const mounted = useIsMounted()
   const variants: Variants = {
     hidden: {},
     show: {
@@ -58,13 +71,15 @@ export function StaggerContainer({
     },
   }
 
+  if (!mounted) {
+    return <div className={cn(className)}>{children}</div>
+  }
   return (
     <motion.div
       className={cn(className)}
       variants={variants}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      animate="show"
     >
       {children}
     </motion.div>
