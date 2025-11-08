@@ -32,7 +32,7 @@ export function Navigation() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 glass-strong">
-      <div className="container mx-auto max-w-6xl container-padding">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 group">
             <GlowOnHover>
@@ -63,7 +63,7 @@ export function Navigation() {
                 </Link>
               </HoverLift>
             ))}
-
+          </nav>
           <div className="flex items-center space-x-3">
             <div className="md:hidden">
               <IconButton aria-label="Open menu" onClick={() => setOpen(true)} size="small" className="text-foreground">
@@ -110,10 +110,10 @@ export function Navigation() {
           </List>
           <Divider />
           <div className="p-4 flex gap-2">
-            <Button asChild variant="outline" size="sm" className="grow">
+            <Button asChild variant="outline" size="sm" className="grow glass-secondary">
               <Link href="/cv/Mohammed_Fouda_CV.pdf" target="_blank">Download CV</Link>
             </Button>
-            <Button asChild size="sm" className="grow">
+            <Button asChild size="sm" className="grow glass-primary">
               <Link href="mailto:fouda@mefouda.me">Email</Link>
             </Button>
           </div>
