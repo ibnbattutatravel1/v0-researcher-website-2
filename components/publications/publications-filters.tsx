@@ -177,7 +177,7 @@ export function PublicationsFilters() {
           {filterState.searchQuery && (
             <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20">
               Search: "{filterState.searchQuery}"
-              <button onClick={() => toggleFilter("searchQuery", "")} className="ml-1 hover:text-accent-foreground">
+              <button onClick={() => toggleFilter("searchQuery", "")} className="ml-1 hover:text-foreground">
                 <X className="h-3 w-3" />
               </button>
             </Badge>
@@ -185,7 +185,7 @@ export function PublicationsFilters() {
           {filterState.featured && (
             <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20">
               Featured
-              <button onClick={() => toggleFilter("featured", false)} className="ml-1 hover:text-accent-foreground">
+              <button onClick={() => toggleFilter("featured", false)} className="ml-1 hover:text-foreground">
                 <X className="h-3 w-3" />
               </button>
             </Badge>
@@ -200,7 +200,7 @@ export function PublicationsFilters() {
                   else if (topics.includes(filter)) toggleFilter("topics", filter)
                   else if (types.includes(filter)) toggleFilter("types", filter)
                 }}
-                className="ml-1 hover:text-accent-foreground"
+                className="ml-1 hover:text-foreground"
               >
                 <X className="h-3 w-3" />
               </button>

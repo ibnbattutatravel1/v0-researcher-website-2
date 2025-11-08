@@ -133,7 +133,7 @@ export function PublicationsList() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="glass-secondary text-accent hover:text-accent-foreground"
+                            className="glass-secondary text-accent hover:text-foreground"
                           >
                             <FileText className="mr-1 h-3 w-3" />
                             PDF
@@ -143,7 +143,7 @@ export function PublicationsList() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="glass-secondary text-accent hover:text-accent-foreground"
+                            className="glass-secondary text-accent hover:text-foreground"
                           >
                             <ExternalLink className="mr-1 h-3 w-3" />
                             DOI

@@ -99,7 +99,7 @@ export function ResearchFilters() {
                   if (themes.includes(filter)) toggleTheme(filter)
                   else if (statuses.includes(filter)) toggleStatus(filter)
                 }}
-                className="ml-1 hover:text-accent-foreground"
+                className="ml-1 hover:text-foreground"
               >
                 <X className="h-3 w-3" />
               </button>

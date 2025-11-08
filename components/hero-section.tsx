@@ -3,15 +3,24 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Download, Mail } from "lucide-react"
 import { FadeIn, SlideUp, FloatAnimation, PulseGlow } from "@/components/motion"
 import { GlassCard } from "@/components/ui/glass-card"
+import { motion } from "framer-motion"
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden section-spacing">
-      {/* Enhanced background gradient effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent/5" />
-      <div className="absolute inset-0 noise-texture opacity-20" />
+      {/* Animated background gradient + noise */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent/5"
+        animate={{ opacity: [0.15, 0.3, 0.15] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute inset-0 noise-texture"
+        animate={{ opacity: [0.08, 0.18, 0.08] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      <div className="container mx-auto max-w-6xl container-padding relative">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative">
         <div className="content-grid lg:grid-cols-2 items-center">
           <FadeIn className="space-y-8">
             <div className="space-y-6">

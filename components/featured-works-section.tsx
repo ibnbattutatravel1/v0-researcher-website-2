@@ -62,7 +62,7 @@ export function FeaturedWorksSection() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-accent hover:text-accent-foreground hover:bg-accent/10"
+                      className="text-accent hover:text-foreground hover:bg-white/5"
                       asChild
                     >
                       <a href={work.pdfUrl || `https://doi.org/${work.doi}`} target="_blank" rel="noopener noreferrer">

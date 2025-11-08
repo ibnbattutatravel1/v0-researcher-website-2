@@ -68,7 +68,7 @@ export function ProjectsGrid() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-accent hover:text-accent-foreground hover:bg-accent/10"
+                    className="text-accent hover:text-foreground hover:bg-white/5"
                   >
                     <FileText className="mr-1 h-3 w-3" />
                     Paper
@@ -78,7 +78,7 @@ export function ProjectsGrid() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-accent hover:text-accent-foreground hover:bg-accent/10"
+                    className="text-accent hover:text-foreground hover:bg-white/5"
                   >
                     <Github className="mr-1 h-3 w-3" />
                     Code
@@ -88,7 +88,7 @@ export function ProjectsGrid() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-accent hover:text-accent-foreground hover:bg-accent/10"
+                    className="text-accent hover:text-foreground hover:bg-white/5"
                   >
                     <Play className="mr-1 h-3 w-3" />
                     Slides

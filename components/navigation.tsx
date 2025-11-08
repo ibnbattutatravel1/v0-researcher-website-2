@@ -49,19 +49,18 @@ export function Navigation() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-4">
             {navigation.map((item) => (
-              <HoverLift key={item.name}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-accent glass-secondary",
-                    pathname === item.href ? "text-accent glass-primary" : "text-muted-foreground",
-                  )}
-                >
-                  {item.name}
-                </Link>
-              </HoverLift>
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-accent",
+                  pathname === item.href ? "text-accent" : "text-muted-foreground",
+                )}
+              >
+                {item.name}
+              </Link>
             ))}
           </nav>
           <div className="flex items-center space-x-3">
