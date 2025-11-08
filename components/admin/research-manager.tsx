@@ -25,6 +25,8 @@ export function ResearchManager() {
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
   const [form, setForm] = useState<Project>({ title: "", description: "", role: "", status: "Active", year: "2024" })
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<Project>({ title: "", description: "", role: "", status: "Active", year: "2024" })
 
   const load = async () => {
     setLoading(true)
@@ -66,6 +68,30 @@ export function ResearchManager() {
   const remove = async (id?: number) => {
     if (!id) return
     await fetch(`/api/research/${id}`, { method: "DELETE" })
+    await load()
+  }
+
+  const startEdit = (p: Project) => {
+    setEditingId(p.id ?? null)
+    setEditForm({
+      title: p.title,
+      description: p.description,
+      role: p.role,
+      status: p.status,
+      year: p.year,
+      themes: p.themes ?? [],
+      funding: p.funding ?? "",
+    })
+  }
+
+  const saveEdit = async () => {
+    if (!editingId) return
+    await fetch(`/api/research/${editingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    })
+    setEditingId(null)
     await load()
   }
 
@@ -120,11 +146,32 @@ export function ResearchManager() {
                       </div>
 
                       <div className="flex items-center space-x-2">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent" onClick={() => startEdit(project)}>
+                          Edit
+                        </Button>
                         <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(project.id)}>
                           <Trash2 className="h-3 w-3" />
                         </Button>
                       </div>
                     </div>
+
+                    {editingId === project.id && (
+                      <div className="space-y-2 border-t border-border/40 pt-3">
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Title" value={editForm.title} onChange={(e) => setEditForm({ ...editForm, title: e.target.value })} />
+                          <Input placeholder="Role" value={editForm.role} onChange={(e) => setEditForm({ ...editForm, role: e.target.value })} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} />
+                          <Input placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
+                        </div>
+                        <Textarea placeholder="Description" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" onClick={saveEdit}>Save</Button>
+                          <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>

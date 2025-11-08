@@ -23,6 +23,15 @@ export function AwardsManager() {
   const [items, setItems] = useState<Award[]>([])
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<Award>({
+    title: "",
+    organization: "",
+    year: "2024",
+    category: "",
+    amount: "",
+    description: "",
+  })
   const [form, setForm] = useState<Award>({
     title: "",
     organization: "",
@@ -75,6 +84,29 @@ export function AwardsManager() {
     await load()
   }
 
+  const startEdit = (a: Award) => {
+    setEditingId(a.id ?? null)
+    setEditForm({
+      title: a.title,
+      organization: a.organization,
+      year: a.year,
+      category: a.category,
+      amount: a.amount ?? "",
+      description: a.description,
+    })
+  }
+
+  const saveEdit = async () => {
+    if (!editingId) return
+    await fetch(`/api/awards/${editingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    })
+    setEditingId(null)
+    await load()
+  }
+
   return (
     <div className="space-y-6">
       <Card className="glass p-6 space-y-4">
@@ -111,10 +143,34 @@ export function AwardsManager() {
                         <div className="text-sm text-muted-foreground">{a.organization} • {a.year} • {a.category} {a.amount ? `• ${a.amount}` : ""}</div>
                         <div className="text-sm text-muted-foreground">{a.description}</div>
                       </div>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(a.id)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent" onClick={() => startEdit(a)}>
+                          Edit
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(a.id)}>
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
+
+                    {editingId === a.id && (
+                      <div className="space-y-2 border-t border-border/40 pt-3">
+                        <Input placeholder="Title" value={editForm.title} onChange={(e) => setEditForm({ ...editForm, title: e.target.value })} />
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Organization" value={editForm.organization} onChange={(e) => setEditForm({ ...editForm, organization: e.target.value })} />
+                          <Input placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Category" value={editForm.category} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} />
+                          <Input placeholder="Amount" value={editForm.amount} onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })} />
+                        </div>
+                        <Textarea placeholder="Description" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" onClick={saveEdit}>Save</Button>
+                          <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>

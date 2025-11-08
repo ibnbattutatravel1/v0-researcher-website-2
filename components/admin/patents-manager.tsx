@@ -26,6 +26,18 @@ export function PatentsManager() {
   const [items, setItems] = useState<Patent[]>([])
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<Patent>({
+    title: "",
+    number: "",
+    status: "Filed",
+    filedDate: "",
+    grantedDate: "",
+    description: "",
+    coInventors: [],
+    categories: [],
+    publicUrl: "",
+  })
   const [form, setForm] = useState<Patent>({
     title: "",
     number: "",
@@ -85,6 +97,32 @@ export function PatentsManager() {
     await load()
   }
 
+  const startEdit = (p: Patent) => {
+    setEditingId(p.id ?? null)
+    setEditForm({
+      title: p.title,
+      number: p.number,
+      status: p.status,
+      filedDate: p.filedDate,
+      grantedDate: p.grantedDate ?? "",
+      description: p.description,
+      coInventors: p.coInventors ?? [],
+      categories: p.categories ?? [],
+      publicUrl: p.publicUrl ?? "",
+    })
+  }
+
+  const saveEdit = async () => {
+    if (!editingId) return
+    await fetch(`/api/patents/${editingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    })
+    setEditingId(null)
+    await load()
+  }
+
   return (
     <div className="space-y-6">
       <Card className="glass p-6 space-y-4">
@@ -129,10 +167,37 @@ export function PatentsManager() {
                           ))}
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(p.id)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent" onClick={() => startEdit(p)}>
+                          Edit
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(p.id)}>
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
+
+                    {editingId === p.id && (
+                      <div className="space-y-2 border-t border-border/40 pt-3">
+                        <Input placeholder="Title" value={editForm.title} onChange={(e) => setEditForm({ ...editForm, title: e.target.value })} />
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Number" value={editForm.number} onChange={(e) => setEditForm({ ...editForm, number: e.target.value })} />
+                          <Input placeholder="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Filed Date" value={editForm.filedDate} onChange={(e) => setEditForm({ ...editForm, filedDate: e.target.value })} />
+                          <Input placeholder="Granted Date" value={editForm.grantedDate} onChange={(e) => setEditForm({ ...editForm, grantedDate: e.target.value })} />
+                        </div>
+                        <Textarea placeholder="Description" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
+                        <Input placeholder="Co-inventors (comma separated)" value={(editForm.coInventors ?? []).join(", ")} onChange={(e) => setEditForm({ ...editForm, coInventors: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+                        <Input placeholder="Categories (comma separated)" value={(editForm.categories ?? []).join(", ")} onChange={(e) => setEditForm({ ...editForm, categories: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+                        <Input placeholder="Public URL" value={editForm.publicUrl} onChange={(e) => setEditForm({ ...editForm, publicUrl: e.target.value })} />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" onClick={saveEdit}>Save</Button>
+                          <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>

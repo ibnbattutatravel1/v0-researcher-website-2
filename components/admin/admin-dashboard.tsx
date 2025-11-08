@@ -8,6 +8,8 @@ import { ContentStats } from "./content-stats"
 import { SiteSettings } from "./site-settings"
 import { PatentsManager } from "./patents-manager"
 import { AwardsManager } from "./awards-manager"
+import { TalksManager } from "./talks-manager"
+import { ContactInbox } from "./contact-inbox"
 import { FileText, Beaker, Send as Sync, BarChart3 } from "lucide-react"
 
 export function AdminDashboard() {
@@ -16,7 +18,7 @@ export function AdminDashboard() {
       <ContentStats />
 
       <Tabs defaultValue="settings" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-7 glass">
+        <TabsList className="grid w-full grid-cols-9 glass">
           <TabsTrigger value="settings" className="flex items-center space-x-2">
             <BarChart3 className="h-4 w-4" />
             <span>Settings</span>
@@ -36,6 +38,14 @@ export function AdminDashboard() {
           <TabsTrigger value="awards" className="flex items-center space-x-2">
             <FileText className="h-4 w-4" />
             <span>Awards</span>
+          </TabsTrigger>
+          <TabsTrigger value="talks" className="flex items-center space-x-2">
+            <FileText className="h-4 w-4" />
+            <span>Talks</span>
+          </TabsTrigger>
+          <TabsTrigger value="inbox" className="flex items-center space-x-2">
+            <FileText className="h-4 w-4" />
+            <span>Contact Inbox</span>
           </TabsTrigger>
           <TabsTrigger value="sync" className="flex items-center space-x-2">
             <Sync className="h-4 w-4" />
@@ -65,6 +75,14 @@ export function AdminDashboard() {
 
         <TabsContent value="awards">
           <AwardsManager />
+        </TabsContent>
+
+        <TabsContent value="talks">
+          <TalksManager />
+        </TabsContent>
+
+        <TabsContent value="inbox">
+          <ContactInbox />
         </TabsContent>
 
         <TabsContent value="sync">
