@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Download, Mail } from "lucide-react"
+import { FadeIn, SlideUp } from "@/components/motion"
+import { GlassCard } from "@/components/ui/glass-card"
 
 export function HeroSection() {
   return (
@@ -10,7 +12,7 @@ export function HeroSection() {
 
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <FadeIn className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance leading-tight">
                 Mohammed E. Fouda
@@ -42,11 +44,11 @@ export function HeroSection() {
             <div className="pt-4">
               <p className="text-sm text-muted-foreground">Researcher in AI hardware & brain-inspired computing</p>
             </div>
-          </div>
+          </FadeIn>
 
-          <div className="relative">
+          <SlideUp className="relative">
             {/* Animated node network visualization */}
-            <div className="relative h-96 w-full glass rounded-2xl p-8 glow">
+            <GlassCard className="relative h-96 w-full rounded-2xl p-8">
               <div className="absolute inset-0 overflow-hidden rounded-2xl">
                 {/* Node network pattern */}
                 <svg className="w-full h-full opacity-30" viewBox="0 0 400 300">
@@ -147,8 +149,8 @@ export function HeroSection() {
                   <div className="text-sm text-muted-foreground">Bridging algorithms & silicon</div>
                 </div>
               </div>
-            </div>
-          </div>
+            </GlassCard>
+          </SlideUp>
         </div>
       </div>
     </section>
