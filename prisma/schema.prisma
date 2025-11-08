@@ -18,7 +18,7 @@ model SiteSettings {
   id             Int      @id @default(1)
   heroTitle      String   @default("")
   heroSubtitle   String   @default("")
-  heroDescription String  @default("")
+  heroDescription String  @db.Text
   cvUrl          String   @default("")
   contactEmail   String   @default("")
   showResearch   Boolean  @default(true)
@@ -36,7 +36,7 @@ model ContactMessage {
   name      String
   email     String
   subject   String   @default("")
-  message   String
+  message   String   @db.Text
   createdAt DateTime @default(now())
   read      Boolean  @default(false)
 }
@@ -44,7 +44,7 @@ model ContactMessage {
 model ResearchProject {
   id           Int      @id @default(autoincrement())
   title        String
-  description  String
+  description  String   @db.Text
   role         String
   status       String
   year         String
@@ -65,7 +65,7 @@ model Patent {
   status      String
   filedDate   String
   grantedDate String?  @default("")
-  description String
+  description String   @db.Text
   coInventors Json?
   categories  Json?
   publicUrl   String?  @default("")
@@ -80,7 +80,7 @@ model Award {
   year         String
   category     String
   amount       String?  @default("")
-  description  String
+  description  String   @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -92,7 +92,7 @@ model Experience {
   location     String
   duration     String
   type         String
-  description  String
+  description  String   @db.Text
   achievements Json?
   skills       Json?
   createdAt    DateTime @default(now())
@@ -106,10 +106,11 @@ model Talk {
   date        String
   type        String
   audience    String?  @default("")
-  description String
+  description String   @db.Text
   topics      Json?
   videoUrl    String?  @default("")
   slidesUrl   String?  @default("")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+

@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-type Params = { params: { id: string } }
+type Params = { params: Promise<{ id: string }> }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(request: Request, context: Params) {
   try {
-    const id = Number(params.id)
+    const { id: idStr } = await context.params
+    const id = Number(idStr)
     const data = await request.json()
     const updated = await prisma.researchProject.update({ where: { id }, data })
     return NextResponse.json(updated)
@@ -14,9 +15,10 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(_request: Request, { params }: Params) {
+export async function DELETE(_request: Request, context: Params) {
   try {
-    const id = Number(params.id)
+    const { id: idStr } = await context.params
+    const id = Number(idStr)
     await prisma.researchProject.delete({ where: { id } })
     return NextResponse.json({ ok: true })
   } catch (e) {

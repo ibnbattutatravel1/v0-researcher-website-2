@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-type Params = { params: { id: string } }
+type Params = { params: Promise<{ id: string }> }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(request: Request, context: Params) {
   try {
-    const id = Number(params.id)
+    const { id: idStr } = await context.params
+    const id = Number(idStr)
     const body = await request.json().catch(() => ({})) as { read?: boolean }
     const updated = await prisma.contactMessage.update({ where: { id }, data: { read: body.read ?? true } })
     return NextResponse.json(updated)

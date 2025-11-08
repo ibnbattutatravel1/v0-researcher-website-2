@@ -18,40 +18,40 @@ export function AdminDashboard() {
       <ContentStats />
 
       <Tabs defaultValue="settings" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-9 glass">
-          <TabsTrigger value="settings" className="flex items-center space-x-2">
+        <TabsList className="glass w-full overflow-x-auto flex gap-2 md:grid md:grid-cols-9">
+          <TabsTrigger value="settings" className="flex items-center space-x-2 shrink-0">
             <BarChart3 className="h-4 w-4" />
             <span>Settings</span>
           </TabsTrigger>
-          <TabsTrigger value="publications" className="flex items-center space-x-2">
+          <TabsTrigger value="publications" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
             <span>Publications</span>
           </TabsTrigger>
-          <TabsTrigger value="research" className="flex items-center space-x-2">
+          <TabsTrigger value="research" className="flex items-center space-x-2 shrink-0">
             <Beaker className="h-4 w-4" />
             <span>Research</span>
           </TabsTrigger>
-          <TabsTrigger value="patents" className="flex items-center space-x-2">
+          <TabsTrigger value="patents" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
             <span>Patents</span>
           </TabsTrigger>
-          <TabsTrigger value="awards" className="flex items-center space-x-2">
+          <TabsTrigger value="awards" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
             <span>Awards</span>
           </TabsTrigger>
-          <TabsTrigger value="talks" className="flex items-center space-x-2">
+          <TabsTrigger value="talks" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
             <span>Talks</span>
           </TabsTrigger>
-          <TabsTrigger value="inbox" className="flex items-center space-x-2">
+          <TabsTrigger value="inbox" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
             <span>Contact Inbox</span>
           </TabsTrigger>
-          <TabsTrigger value="sync" className="flex items-center space-x-2">
+          <TabsTrigger value="sync" className="flex items-center space-x-2 shrink-0">
             <Sync className="h-4 w-4" />
             <span>Scholar Sync</span>
           </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center space-x-2">
+          <TabsTrigger value="analytics" className="flex items-center space-x-2 shrink-0">
             <BarChart3 className="h-4 w-4" />
             <span>Analytics</span>
           </TabsTrigger>
