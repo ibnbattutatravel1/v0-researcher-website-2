@@ -8,6 +8,7 @@ import { ContentStats } from "./content-stats"
 import { SiteSettings } from "./site-settings"
 import { PatentsManager } from "./patents-manager"
 import { AwardsManager } from "./awards-manager"
+import { ExperienceManager } from "./experience-manager"
 import { TalksManager } from "./talks-manager"
 import { ContactInbox } from "./contact-inbox"
 import { FileText, Beaker, Send as Sync, BarChart3 } from "lucide-react"
@@ -18,7 +19,7 @@ export function AdminDashboard() {
       <ContentStats />
 
       <Tabs defaultValue="settings" className="space-y-6">
-        <TabsList className="glass w-full overflow-x-auto flex gap-2 md:grid md:grid-cols-9">
+        <TabsList className="glass w-full overflow-x-auto flex gap-2 md:grid md:grid-cols-10">
           <TabsTrigger value="settings" className="flex items-center space-x-2 shrink-0">
             <BarChart3 className="h-4 w-4" />
             <span>Settings</span>
@@ -30,6 +31,10 @@ export function AdminDashboard() {
           <TabsTrigger value="research" className="flex items-center space-x-2 shrink-0">
             <Beaker className="h-4 w-4" />
             <span>Research</span>
+          </TabsTrigger>
+          <TabsTrigger value="experience" className="flex items-center space-x-2 shrink-0">
+            <FileText className="h-4 w-4" />
+            <span>Experience</span>
           </TabsTrigger>
           <TabsTrigger value="patents" className="flex items-center space-x-2 shrink-0">
             <FileText className="h-4 w-4" />
@@ -67,6 +72,10 @@ export function AdminDashboard() {
 
         <TabsContent value="research">
           <ResearchManager />
+        </TabsContent>
+
+        <TabsContent value="experience">
+          <ExperienceManager />
         </TabsContent>
 
         <TabsContent value="patents">

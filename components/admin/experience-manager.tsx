@@ -35,6 +35,17 @@ export function ExperienceManager() {
     achievements: [],
     skills: [],
   })
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editForm, setEditForm] = useState<Experience>({
+    position: "",
+    organization: "",
+    location: "",
+    duration: "",
+    type: "industry",
+    description: "",
+    achievements: [],
+    skills: [],
+  })
 
   const load = async () => {
     setLoading(true)
@@ -83,6 +94,31 @@ export function ExperienceManager() {
     await load()
   }
 
+  const startEdit = (e: Experience) => {
+    setEditingId(e.id ?? null)
+    setEditForm({
+      position: e.position,
+      organization: e.organization,
+      location: e.location,
+      duration: e.duration,
+      type: e.type,
+      description: e.description,
+      achievements: e.achievements ?? [],
+      skills: e.skills ?? [],
+    })
+  }
+
+  const saveEdit = async () => {
+    if (!editingId) return
+    await fetch(`/api/experience/${editingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    })
+    setEditingId(null)
+    await load()
+  }
+
   return (
     <div className="space-y-6">
       <Card className="glass p-6 space-y-4">
@@ -126,10 +162,36 @@ export function ExperienceManager() {
                           ))}
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(e.id)}>
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent" onClick={() => startEdit(e)}>
+                          Edit
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(e.id)}>
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
+
+                    {editingId === e.id && (
+                      <div className="space-y-2 border-t border-border/40 pt-3">
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Position" value={editForm.position} onChange={(ev) => setEditForm({ ...editForm, position: ev.target.value })} />
+                          <Input placeholder="Organization" value={editForm.organization} onChange={(ev) => setEditForm({ ...editForm, organization: ev.target.value })} />
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input placeholder="Location" value={editForm.location} onChange={(ev) => setEditForm({ ...editForm, location: ev.target.value })} />
+                          <Input placeholder="Duration" value={editForm.duration} onChange={(ev) => setEditForm({ ...editForm, duration: ev.target.value })} />
+                        </div>
+                        <Input placeholder="Type (industry/academic)" value={editForm.type} onChange={(ev) => setEditForm({ ...editForm, type: ev.target.value })} />
+                        <Textarea placeholder="Description" value={editForm.description} onChange={(ev) => setEditForm({ ...editForm, description: ev.target.value })} />
+                        <Input placeholder="Achievements (comma separated)" value={(editForm.achievements ?? []).join(", ")} onChange={(ev) => setEditForm({ ...editForm, achievements: ev.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+                        <Input placeholder="Skills (comma separated)" value={(editForm.skills ?? []).join(", ")} onChange={(ev) => setEditForm({ ...editForm, skills: ev.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" onClick={saveEdit}>Save</Button>
+                          <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                        </div>
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>
