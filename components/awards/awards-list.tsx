@@ -1,10 +1,18 @@
 import { GlassCard } from "@/components/ui/glass-card"
 import { Badge } from "@/components/ui/badge"
 import { Award, Calendar, Building } from "lucide-react"
-import { awards } from "@/data/awards"
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/motion"
 
-export function AwardsList() {
+type AwardItem = {
+  title: string
+  organization: string
+  year: string
+  category: string
+  amount?: string
+  description: string
+}
+
+export function AwardsList({ awards }: { awards: AwardItem[] }) {
   return (
     <div className="space-y-8">
       <StaggerContainer className="card-grid">

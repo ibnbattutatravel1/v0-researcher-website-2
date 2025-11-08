@@ -7,7 +7,15 @@ import { FadeIn, SlideUp, FloatAnimation, PulseGlow } from "@/components/motion"
 import { GlassCard } from "@/components/ui/glass-card"
 import { motion } from "framer-motion"
 
-export function HeroSection() {
+type HeroProps = {
+  title: string
+  subtitle: string
+  description: string
+  cvUrl: string
+  contactEmail: string
+}
+
+export function HeroSection({ title, subtitle, description, cvUrl, contactEmail }: HeroProps) {
   return (
     <section className="relative overflow-hidden section-spacing">
       {/* Animated background gradient + noise */}
@@ -26,20 +34,15 @@ export function HeroSection() {
         <div className="content-grid lg:grid-cols-2 items-center">
           <FadeIn className="space-y-8">
             <div className="space-y-6">
-              <h1 className="text-display text-gradient-accent">
-                Mohammed E. Fouda
-              </h1>
-              <p className="text-headline text-gradient-subtle">Applied Research Lead at Rain AI</p>
-              <p className="text-body text-muted-foreground max-w-2xl">
-                I design AI accelerators and neuromorphic systems that bridge algorithms and hardware, focusing on
-                brain-inspired computing and efficient quantization techniques.
-              </p>
+              <h1 className="text-display text-gradient-accent">{title}</h1>
+              <p className="text-headline text-gradient-subtle">{subtitle}</p>
+              <p className="text-body text-muted-foreground max-w-2xl">{description}</p>
             </div>
 
             <div className="cluster-layout">
               <PulseGlow>
                 <Button asChild size="lg" className="glass-primary glow-hover group">
-                  <Link href="/cv/Mohammed_Fouda_CV.pdf" target="_blank">
+                  <Link href={cvUrl} target="_blank">
                     <Download className="mr-2 h-4 w-4" />
                     Download CV
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -47,7 +50,7 @@ export function HeroSection() {
                 </Button>
               </PulseGlow>
               <Button asChild variant="outline" size="lg" className="glass-secondary glow-hover group">
-                <Link href="mailto:fouda@mefouda.me">
+                <Link href={`mailto:${contactEmail}`}>
                   <Mail className="mr-2 h-4 w-4" />
                   Email Mohammed
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

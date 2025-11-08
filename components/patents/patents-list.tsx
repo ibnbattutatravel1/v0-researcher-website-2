@@ -2,10 +2,21 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Users } from "lucide-react"
-import { patents } from "@/data/patents"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function PatentsList() {
+type Patent = {
+  title: string
+  number: string
+  status: string
+  filedDate: string
+  grantedDate?: string
+  description: string
+  coInventors?: string[]
+  categories: string[]
+  publicUrl?: string
+}
+
+export function PatentsList({ patents }: { patents: Patent[] }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

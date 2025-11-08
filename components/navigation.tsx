@@ -15,20 +15,43 @@ import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Research", href: "/research" },
-  { name: "Publications", href: "/publications" },
-  { name: "Patents", href: "/patents" },
-  { name: "Awards", href: "/awards" },
-  { name: "Experience", href: "/experience" },
-  { name: "Talks", href: "/talks" },
-  { name: "Contact", href: "/contact" },
-]
+type NavProps = {
+  cvUrl?: string
+  contactEmail?: string
+  showResearch?: boolean
+  showPatents?: boolean
+  showAwards?: boolean
+  showExperience?: boolean
+  showTalks?: boolean
+  showContact?: boolean
+}
 
-export function Navigation() {
+export function Navigation({
+  cvUrl = "/cv/Mohammed_Fouda_CV.pdf",
+  contactEmail = "fouda@mefouda.me",
+  showResearch = true,
+  showPatents = true,
+  showAwards = true,
+  showExperience = true,
+  showTalks = true,
+  showContact = true,
+}: NavProps) {
   const pathname = usePathname()
   const [open, setOpen] = React.useState(false)
+
+  const navigation = React.useMemo(
+    () => [
+      { name: "Home", href: "/", show: true },
+      { name: "Research", href: "/research", show: showResearch },
+      { name: "Publications", href: "/publications", show: true },
+      { name: "Patents", href: "/patents", show: showPatents },
+      { name: "Awards", href: "/awards", show: showAwards },
+      { name: "Experience", href: "/experience", show: showExperience },
+      { name: "Talks", href: "/talks", show: showTalks },
+      { name: "Contact", href: "/contact", show: showContact },
+    ].filter((i) => i.show),
+    [showResearch, showPatents, showAwards, showExperience, showTalks, showContact],
+  )
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 glass-strong">
@@ -72,14 +95,14 @@ export function Navigation() {
             <div className="hidden md:flex items-center space-x-3">
               <HoverLift>
                 <Button asChild variant="outline" size="sm" className="glass-secondary glow-hover">
-                  <Link href="/cv/Mohammed_Fouda_CV.pdf" target="_blank">
+                  <Link href={cvUrl} target="_blank">
                     Download CV
                   </Link>
                 </Button>
               </HoverLift>
               <HoverLift>
                 <Button asChild size="sm" className="glass-primary glow-hover">
-                  <Link href="mailto:fouda@mefouda.me">Email</Link>
+                  <Link href={`mailto:${contactEmail}`}>Email</Link>
                 </Button>
               </HoverLift>
             </div>

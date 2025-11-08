@@ -19,6 +19,8 @@ export function ContactForm() {
     message: "",
     honeypot: "", // Spam protection
   })
+  const [submitting, setSubmitting] = useState(false)
+  const [status, setStatus] = useState<null | { ok: boolean; msg: string }>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,8 +30,23 @@ export function ContactForm() {
       return
     }
 
-    // TODO: Implement form submission logic
-    console.log("Form submitted:", formData)
+    try {
+      setSubmitting(true)
+      setStatus(null)
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "Failed to send")
+      setStatus({ ok: true, msg: "Message sent successfully." })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Failed to send message"
+      setStatus({ ok: false, msg })
+    } finally {
+      setSubmitting(false)
+    }
 
     // Reset form
     setFormData({
@@ -120,10 +137,14 @@ export function ContactForm() {
           />
         </div>
 
-        <Button type="submit" size="lg" className="w-full glow-hover">
+        <Button type="submit" size="lg" className="w-full glow-hover" disabled={submitting}>
           <Send className="mr-2 h-4 w-4" />
-          Send Message
+          {submitting ? "Sending..." : "Send Message"}
         </Button>
+
+        {status && (
+          <p className={status.ok ? "text-sm text-green-400" : "text-sm text-destructive"}>{status.msg}</p>
+        )}
 
         <p className="text-xs text-muted-foreground">
           * Required fields. Your information will be kept confidential and used only to respond to your inquiry.

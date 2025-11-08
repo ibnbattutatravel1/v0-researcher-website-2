@@ -1,0 +1,115 @@
+// Prisma schema for MySQL
+// Run:
+//   pnpm add -D prisma
+//   pnpm add @prisma/client
+//   npx prisma generate
+//   npx prisma migrate dev
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id             Int      @id @default(1)
+  heroTitle      String   @default("")
+  heroSubtitle   String   @default("")
+  heroDescription String  @default("")
+  cvUrl          String   @default("")
+  contactEmail   String   @default("")
+  showResearch   Boolean  @default(true)
+  showPatents    Boolean  @default(true)
+  showAwards     Boolean  @default(true)
+  showExperience Boolean  @default(true)
+  showTalks      Boolean  @default(true)
+  showContact    Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String   @default("")
+  message   String
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+}
+
+model ResearchProject {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  role         String
+  status       String
+  year         String
+  funding      String?  @default("")
+  collaborators Json?
+  themes       Json?
+  paperUrl     String?  @default("")
+  codeUrl      String?  @default("")
+  slidesUrl    String?  @default("")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Patent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  number      String
+  status      String
+  filedDate   String
+  grantedDate String?  @default("")
+  description String
+  coInventors Json?
+  categories  Json?
+  publicUrl   String?  @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Award {
+  id           Int      @id @default(autoincrement())
+  title        String
+  organization String
+  year         String
+  category     String
+  amount       String?  @default("")
+  description  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Experience {
+  id           Int      @id @default(autoincrement())
+  position     String
+  organization String
+  location     String
+  duration     String
+  type         String
+  description  String
+  achievements Json?
+  skills       Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Talk {
+  id          Int      @id @default(autoincrement())
+  title       String
+  venue       String
+  date        String
+  type        String
+  audience    String?  @default("")
+  description String
+  topics      Json?
+  videoUrl    String?  @default("")
+  slidesUrl   String?  @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

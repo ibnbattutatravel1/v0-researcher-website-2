@@ -3,10 +3,20 @@
 import { GlassCard } from "@/components/ui/glass-card"
 import { Badge } from "@/components/ui/badge"
 import { Building, GraduationCap, Calendar } from "lucide-react"
-import { experiences } from "@/data/experiences"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function ExperienceTimeline() {
+type ExperienceItem = {
+  position: string
+  organization: string
+  location: string
+  duration: string
+  type: "industry" | "academic" | string
+  description: string
+  achievements?: string[]
+  skills?: string[]
+}
+
+export function ExperienceTimeline({ experiences }: { experiences: ExperienceItem[] }) {
   const industryExperiences = experiences.filter((exp) => exp.type === "industry")
   const academicExperiences = experiences.filter((exp) => exp.type === "academic")
 

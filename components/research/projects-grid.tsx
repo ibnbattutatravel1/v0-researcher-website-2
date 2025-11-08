@@ -2,18 +2,31 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { FileText, Github, Play } from "lucide-react"
-import { researchProjects } from "@/data/research-projects"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function ProjectsGrid() {
+type Project = {
+  title: string
+  description: string
+  role: string
+  status: string
+  year: string
+  funding?: string
+  collaborators?: string[]
+  themes: string[]
+  paperUrl?: string
+  codeUrl?: string
+  slidesUrl?: string
+}
+
+export function ProjectsGrid({ projects }: { projects: Project[] }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">Showing {researchProjects.length} research projects</p>
+        <p className="text-sm text-muted-foreground">Showing {projects.length} research projects</p>
       </div>
 
       <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {researchProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <FadeIn key={index}>
             <GlassCard className="glass glow-hover p-6 space-y-4 group">
               <div className="space-y-3">

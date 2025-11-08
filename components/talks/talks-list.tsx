@@ -2,10 +2,21 @@ import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Play, ExternalLink, Calendar, MapPin } from "lucide-react"
-import { talks } from "@/data/talks"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function TalksList() {
+type TalkItem = {
+  title: string
+  venue: string
+  date: string
+  type: string
+  audience?: string
+  description: string
+  topics?: string[]
+  videoUrl?: string
+  slidesUrl?: string
+}
+
+export function TalksList({ talks }: { talks: TalkItem[] }) {
   return (
     <div className="space-y-6">
       <StaggerContainer className="grid grid-cols-1 gap-6">

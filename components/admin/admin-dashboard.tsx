@@ -5,6 +5,7 @@ import { PublicationsManager } from "./publications-manager"
 import { ResearchManager } from "./research-manager"
 import { ScholarSync } from "./scholar-sync"
 import { ContentStats } from "./content-stats"
+import { SiteSettings } from "./site-settings"
 import { FileText, Beaker, Send as Sync, BarChart3 } from "lucide-react"
 
 export function AdminDashboard() {
@@ -12,8 +13,12 @@ export function AdminDashboard() {
     <div className="space-y-8">
       <ContentStats />
 
-      <Tabs defaultValue="publications" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 glass">
+      <Tabs defaultValue="settings" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-5 glass">
+          <TabsTrigger value="settings" className="flex items-center space-x-2">
+            <BarChart3 className="h-4 w-4" />
+            <span>Settings</span>
+          </TabsTrigger>
           <TabsTrigger value="publications" className="flex items-center space-x-2">
             <FileText className="h-4 w-4" />
             <span>Publications</span>
@@ -31,6 +36,10 @@ export function AdminDashboard() {
             <span>Analytics</span>
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="settings">
+          <SiteSettings />
+        </TabsContent>
 
         <TabsContent value="publications">
           <PublicationsManager />

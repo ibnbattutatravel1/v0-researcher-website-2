@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/navigation"
+import { NavigationServer } from "@/components/navigation-server"
 import { Footer } from "@/components/footer"
 import { PublicationsHeader } from "@/components/publications/publications-header"
 import { PublicationsFilters } from "@/components/publications/publications-filters"
@@ -15,7 +15,7 @@ export const metadata = {
 export default function PublicationsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <NavigationServer />
       <main className="py-12">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <PublicationsHeader />
