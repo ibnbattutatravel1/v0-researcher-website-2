@@ -1,0 +1,142 @@
+"use client"
+
+import { useEffect, useMemo, useState } from "react"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Plus, Trash2 } from "lucide-react"
+
+type Experience = {
+  id?: number
+  position: string
+  organization: string
+  location: string
+  duration: string
+  type: string
+  description: string
+  achievements?: string[]
+  skills?: string[]
+}
+
+export function ExperienceManager() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [items, setItems] = useState<Experience[]>([])
+  const [loading, setLoading] = useState(true)
+  const [creating, setCreating] = useState(false)
+  const [form, setForm] = useState<Experience>({
+    position: "",
+    organization: "",
+    location: "",
+    duration: "",
+    type: "industry",
+    description: "",
+    achievements: [],
+    skills: [],
+  })
+
+  const load = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch("/api/experience", { cache: "no-store" })
+      const data = await res.json()
+      setItems(data)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    load()
+  }, [])
+
+  const filtered = useMemo(
+    () => items.filter((e) => e.position.toLowerCase().includes(searchQuery.toLowerCase())),
+    [items, searchQuery],
+  )
+
+  const create = async () => {
+    setCreating(true)
+    try {
+      const res = await fetch("/api/experience", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          achievements: form.achievements ?? [],
+          skills: form.skills ?? [],
+        }),
+      })
+      if (res.ok) {
+        setForm({ position: "", organization: "", location: "", duration: "", type: "industry", description: "", achievements: [], skills: [] })
+        await load()
+      }
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  const remove = async (id?: number) => {
+    if (!id) return
+    await fetch(`/api/experience/${id}`, { method: "DELETE" })
+    await load()
+  }
+
+  return (
+    <div className="space-y-6">
+      <Card className="glass p-6 space-y-4">
+        <h3 className="text-lg font-semibold">Experience</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Input placeholder="Position" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
+            <div className="grid grid-cols-2 gap-2">
+              <Input placeholder="Organization" value={form.organization} onChange={(e) => setForm({ ...form, organization: e.target.value })} />
+              <Input placeholder="Location" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Input placeholder="Duration" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} />
+              <Input placeholder="Type (industry/academic)" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} />
+            </div>
+            <Textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+            <Input placeholder="Achievements (comma separated)" value={(form.achievements ?? []).join(", ")} onChange={(e) => setForm({ ...form, achievements: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+            <Input placeholder="Skills (comma separated)" value={(form.skills ?? []).join(", ")} onChange={(e) => setForm({ ...form, skills: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
+            <Button onClick={create} disabled={creating} className="glow-hover">
+              <Plus className="mr-2 h-4 w-4" />
+              {creating ? "Adding..." : "Add Experience"}
+            </Button>
+          </div>
+
+          <div className="space-y-2">
+            <Input placeholder="Search experience..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="glass bg-transparent" />
+            {loading ? (
+              <div className="text-sm text-muted-foreground">Loading...</div>
+            ) : (
+              <div className="space-y-3">
+                {filtered.map((e) => (
+                  <Card key={e.id} className="glass p-4 space-y-2">
+                    <div className="flex items-start justify-between">
+                      <div className="space-y-1 flex-1">
+                        <div className="font-medium">{e.position}</div>
+                        <div className="text-sm text-muted-foreground">{e.organization} • {e.location} • {e.duration} • {e.type}</div>
+                        <div className="text-sm text-muted-foreground">{e.description}</div>
+                        <div className="flex flex-wrap gap-1">
+                          {(e.skills ?? []).map((s) => (
+                            <Badge key={s} variant="secondary" className="text-xs">{s}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive" onClick={() => remove(e.id)}>
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
+    </div>
+  )
+}
