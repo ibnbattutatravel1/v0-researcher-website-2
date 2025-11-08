@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { PublicationScheduler } from "@/components/publication-scheduler"
+import { Providers } from "@/components/providers"
 import "./globals.css"
 
 const inter = Inter({
@@ -41,9 +42,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-        <PublicationScheduler />
-        <Analytics />
+        <Providers>
+          <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(66,232,224,0.12),transparent_60%)]" />
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <PublicationScheduler />
+          <Analytics />
+        </Providers>
       </body>
     </html>
   )
