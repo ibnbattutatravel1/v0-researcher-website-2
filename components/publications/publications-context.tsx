@@ -54,8 +54,8 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
       const query = filterState.searchQuery.toLowerCase()
       const matchesTitle = publication.title.toLowerCase().includes(query)
       const matchesAuthors = publication.authors.some((author) => author.toLowerCase().includes(query))
-      const matchesTopics = publication.topics?.some((topic) => topic.toLowerCase().includes(query))
-      if (!matchesTitle && !matchesAuthors && !matchesTopics) {
+      const matchesTopic = publication.topic?.toLowerCase().includes(query)
+      if (!matchesTitle && !matchesAuthors && !matchesTopic) {
         return false
       }
     }
@@ -72,11 +72,8 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
       return false
     }
 
-    if (filterState.topics.length > 0) {
-      const hasMatchingTopic = publication.topics?.some((topic) => filterState.topics.includes(topic))
-      if (!hasMatchingTopic) {
-        return false
-      }
+    if (filterState.topics.length > 0 && !filterState.topics.includes(publication.topic)) {
+      return false
     }
 
     if (filterState.types.length > 0 && !filterState.types.includes(publication.type)) {
@@ -93,7 +90,7 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
       case "oldest":
         return a.year - b.year
       case "citations":
-        return (b.citedBy || 0) - (a.citedBy || 0)
+        return (b.citations || 0) - (a.citations || 0)
       case "title":
         return a.title.localeCompare(b.title)
       default:

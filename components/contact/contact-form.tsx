@@ -3,12 +3,13 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Card } from "@/components/ui/card"
+import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Send } from "lucide-react"
+import { FadeIn } from "@/components/motion"
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -48,8 +49,9 @@ export function ContactForm() {
   }
 
   return (
-    <Card className="glass p-6">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <FadeIn>
+      <GlassCard className="p-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-xl font-semibold">Send a Message</h2>
 
         {/* Honeypot field for spam protection */}
@@ -126,7 +128,8 @@ export function ContactForm() {
         <p className="text-xs text-muted-foreground">
           * Required fields. Your information will be kept confidential and used only to respond to your inquiry.
         </p>
-      </form>
-    </Card>
+        </form>
+      </GlassCard>
+    </FadeIn>
   )
 }

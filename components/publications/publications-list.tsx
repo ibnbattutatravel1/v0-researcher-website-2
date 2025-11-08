@@ -1,10 +1,11 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
+import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, FileText, Star, Quote, ChevronDown, Loader2 } from "lucide-react"
 import { usePublications } from "./publications-context"
+import { FadeIn, StaggerContainer } from "@/components/motion"
 
 export function PublicationsList() {
   const {
@@ -85,9 +86,10 @@ export function PublicationsList() {
           </Button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <StaggerContainer className="space-y-4">
           {displayedPublications.map((publication, index) => (
-            <Card key={index} className="glass glow-hover p-6 space-y-4">
+            <FadeIn key={index}>
+              <GlassCard className="p-6 space-y-4">
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="space-y-2 flex-1">
@@ -106,32 +108,21 @@ export function PublicationsList() {
                       </Badge>
                       <span className="text-muted-foreground">•</span>
                       <span className="text-muted-foreground">{publication.year}</span>
-                      {publication.citedBy && (
+                      {publication.citations && (
                         <>
                           <span className="text-muted-foreground">•</span>
-                          <span className="text-muted-foreground">Cited by {publication.citedBy}</span>
+                          <span className="text-muted-foreground">Cited by {publication.citations}</span>
                         </>
                       )}
                     </div>
 
-                    {publication.topics && (
+                    {publication.topic && (
                       <div className="flex flex-wrap gap-1">
-                        {publication.topics.map((topic) => (
-                          <Badge key={topic} variant="secondary" className="text-xs">
-                            {topic}
-                          </Badge>
-                        ))}
+                        <Badge variant="secondary" className="text-xs">{publication.topic}</Badge>
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center space-x-2 ml-4">
-                    {publication.award && (
-                      <Badge variant="default" className="bg-accent text-accent-foreground">
-                        {publication.award}
-                      </Badge>
-                    )}
-                  </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-2">
@@ -156,15 +147,17 @@ export function PublicationsList() {
                         DOI
                       </Button>
                     )}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => copyBibTeX(publication.bibtex)}
-                      className="text-muted-foreground hover:text-accent"
-                    >
-                      <Quote className="mr-1 h-3 w-3" />
-                      BibTeX
-                    </Button>
+                    {publication.bibtex && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyBibTeX(publication.bibtex!)}
+                        className="text-muted-foreground hover:text-accent"
+                      >
+                        <Quote className="mr-1 h-3 w-3" />
+                        BibTeX
+                      </Button>
+                    )}
                   </div>
 
                   <div className="text-xs text-muted-foreground">
@@ -172,9 +165,10 @@ export function PublicationsList() {
                   </div>
                 </div>
               </div>
-            </Card>
+              </GlassCard>
+            </FadeIn>
           ))}
-        </div>
+        </StaggerContainer>
       )}
 
       {filteredPublications.length > 0 && hasMore && (

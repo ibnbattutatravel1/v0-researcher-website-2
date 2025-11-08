@@ -1,12 +1,14 @@
 import Link from "next/link"
-import { Card } from "@/components/ui/card"
+import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Mail, Linkedin, ExternalLink, MapPin, Building } from "lucide-react"
+import { FadeIn, StaggerContainer } from "@/components/motion"
 
 export function ContactInfo() {
   return (
     <div className="space-y-6">
-      <Card className="glass p-6 space-y-6">
+      <FadeIn>
+        <GlassCard className="p-6 space-y-6">
         <h2 className="text-xl font-semibold">Get in Touch</h2>
 
         <div className="space-y-4">
@@ -63,17 +65,20 @@ export function ContactInfo() {
             </Button>
           </div>
         </div>
-      </Card>
+        </GlassCard>
+      </FadeIn>
 
-      <Card className="glass p-6 space-y-4">
-        <h3 className="font-medium">Research Interests</h3>
-        <div className="text-sm text-muted-foreground space-y-2">
-          <p>• AI hardware accelerators</p>
-          <p>• Hardware–software co-design/optimization</p>
-          <p>• Brain-inspired (neuromorphic) computing</p>
-          <p>• Quantization & compression techniques</p>
-        </div>
-      </Card>
+      <FadeIn>
+        <GlassCard className="p-6 space-y-4">
+          <h3 className="font-medium">Research Interests</h3>
+          <div className="text-sm text-muted-foreground space-y-2">
+            <p>• AI hardware accelerators</p>
+            <p>• Hardware–software co-design/optimization</p>
+            <p>• Brain-inspired (neuromorphic) computing</p>
+            <p>• Quantization & compression techniques</p>
+          </div>
+        </GlassCard>
+      </FadeIn>
     </div>
   )
 }

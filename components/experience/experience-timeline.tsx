@@ -1,7 +1,10 @@
-import { Card } from "@/components/ui/card"
+"use client"
+
+import { GlassCard } from "@/components/ui/glass-card"
 import { Badge } from "@/components/ui/badge"
 import { Building, GraduationCap, Calendar } from "lucide-react"
 import { experiences } from "@/data/experiences"
+import { FadeIn, StaggerContainer } from "@/components/motion"
 
 export function ExperienceTimeline() {
   const industryExperiences = experiences.filter((exp) => exp.type === "industry")
@@ -14,9 +17,10 @@ export function ExperienceTimeline() {
         <h2 className="text-2xl font-semibold">{title}</h2>
       </div>
 
-      <div className="space-y-4">
+      <StaggerContainer className="space-y-4">
         {experiences.map((exp: any, index: number) => (
-          <Card key={index} className="glass glow-hover p-6 space-y-4">
+          <FadeIn key={index}>
+            <GlassCard className="p-6 space-y-4">
             <div className="flex items-start justify-between">
               <div className="space-y-2 flex-1">
                 <h3 className="text-lg font-semibold">{exp.position}</h3>
@@ -60,9 +64,10 @@ export function ExperienceTimeline() {
                 ))}
               </div>
             )}
-          </Card>
+            </GlassCard>
+          </FadeIn>
         ))}
-      </div>
+      </StaggerContainer>
     </div>
   )
 
