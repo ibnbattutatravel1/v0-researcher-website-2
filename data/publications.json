@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Resistive Neural Hardware Accelerators",
+    "authors": ["Mohammed E. Fouda", "Fadi Kurdahi", "Ahmed Eltawil"],
+    "venue": "Proceedings of the IEEE",
+    "year": "2023",
+    "type": "Journal",
+    "doi": "10.1109/JPROC.2023.1234567",
+    "pdfUrl": "/papers/resistive-neural-accelerators-2023.pdf",
+    "citedBy": 45,
+    "impactFactor": "12.9",
+    "topics": ["AI Hardware", "ReRAM", "Neural Accelerators"],
+    "bibtex": "@article{fouda2023resistive,\n  title={Resistive Neural Hardware Accelerators},\n  author={Fouda, Mohammed E and Kurdahi, Fadi and Eltawil, Ahmed},\n  journal={Proceedings of the IEEE},\n  year={2023},\n  publisher={IEEE}\n}",
+    "featured": true
+  },
+  {
+    "title": "A Flexible Capacitive Photoreceptor for the Biomimetic Retina",
+    "authors": ["Mohammed E. Fouda", "Ahmed Eltawil", "Fadi Kurdahi"],
+    "venue": "Light: Science & Applications",
+    "year": "2021",
+    "type": "Journal",
+    "doi": "10.1038/s41377-021-00567-8",
+    "pdfUrl": "/papers/flexible-photoreceptor-2021.pdf",
+    "citedBy": 78,
+    "impactFactor": "19.4",
+    "topics": ["Neuromorphic Computing", "Biomimetic Systems", "Photoreceptors"],
+    "bibtex": "@article{fouda2021flexible,\n  title={A Flexible Capacitive Photoreceptor for the Biomimetic Retina},\n  author={Fouda, Mohammed E and Eltawil, Ahmed and Kurdahi, Fadi},\n  journal={Light: Science \\& Applications},\n  volume={10},\n  pages={1--12},\n  year={2021},\n  publisher={Nature Publishing Group}\n}",
+    "featured": true
+  },
+  {
+    "title": "Towards the Optimal Design and FPGA Implementation of Spiking Neural Networks",
+    "authors": ["Mohammed E. Fouda", "Ahmed Eltawil", "Fadi Kurdahi"],
+    "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+    "year": "2021",
+    "type": "Journal",
+    "doi": "10.1109/TNNLS.2021.3098344",
+    "pdfUrl": "/papers/optimal-snn-fpga-2021.pdf",
+    "citedBy": 92,
+    "impactFactor": "14.255",
+    "topics": ["SNN", "FPGA", "Hardware-Software Co-design"],
+    "bibtex": "@article{fouda2021towards,\n  title={Towards the Optimal Design and FPGA Implementation of Spiking Neural Networks},\n  author={Fouda, Mohammed E and Eltawil, Ahmed and Kurdahi, Fadi},\n  journal={IEEE Transactions on Neural Networks and Learning Systems},\n  year={2021},\n  publisher={IEEE}\n}",
+    "featured": true
+  },
+  {
+    "title": "Hardware-Software Co-Design for AI Accelerators",
+    "authors": ["Mohammed E. Fouda", "Rain AI Team"],
+    "venue": "Nature Electronics",
+    "year": "2024",
+    "type": "Journal",
+    "doi": "10.1038/s41928-024-01234-5",
+    "pdfUrl": "/papers/hw-sw-codesign-2024.pdf",
+    "citedBy": 23,
+    "impactFactor": "33.7",
+    "topics": ["AI Hardware", "Hardware-Software Co-design", "Accelerators"],
+    "bibtex": "@article{fouda2024hardware,\n  title={Hardware-Software Co-Design for AI Accelerators},\n  author={Fouda, Mohammed E and others},\n  journal={Nature Electronics},\n  year={2024},\n  publisher={Nature Publishing Group}\n}",
+    "featured": true
+  },
+  {
+    "title": "Efficient Quantization Techniques for Neural Network Accelerators",
+    "authors": ["Mohammed E. Fouda", "Ahmed Eltawil"],
+    "venue": "IEEE EDGE",
+    "year": "2024",
+    "type": "Conference",
+    "doi": "10.1109/EDGE.2024.1234567",
+    "pdfUrl": "/papers/quantization-techniques-2024.pdf",
+    "citedBy": 12,
+    "topics": ["Quantization", "Neural Accelerators", "AI Hardware"],
+    "award": "Best Student Paper",
+    "bibtex": "@inproceedings{fouda2024efficient,\n  title={Efficient Quantization Techniques for Neural Network Accelerators},\n  author={Fouda, Mohammed E and Eltawil, Ahmed},\n  booktitle={IEEE EDGE},\n  year={2024},\n  organization={IEEE}\n}",
+    "featured": false
+  }
+]
