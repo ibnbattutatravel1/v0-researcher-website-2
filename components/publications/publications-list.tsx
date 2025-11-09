@@ -98,7 +98,7 @@ export function PublicationsList() {
                           {publication.featured && (
                             <Star className="h-4 w-4 text-accent fill-current" aria-label="Featured publication" />
                           )}
-                          <h3 className="text-headline priority-1 leading-tight">{publication.title}</h3>
+                          <h3 className="text-xl sm:text-2xl font-semibold leading-snug">{publication.title}</h3>
                         </div>
 
                         <p className="text-sm text-muted-foreground">{publication.authors.join(", ")}</p>

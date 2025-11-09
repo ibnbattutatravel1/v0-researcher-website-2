@@ -138,7 +138,7 @@ export function ExperienceManager() {
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
               >
                 <option value="industry">Industry</option>
-                <option value="academic">Academic</option>
+                <option value="academic">Academic & Teaching</option>
               </select>
             </div>
             <Textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
@@ -195,7 +195,7 @@ export function ExperienceManager() {
                           onChange={(ev) => setEditForm({ ...editForm, type: ev.target.value })}
                         >
                           <option value="industry">Industry</option>
-                          <option value="academic">Academic</option>
+                          <option value="academic">Academic & Teaching</option>
                         </select>
                         <Textarea placeholder="Description" value={editForm.description} onChange={(ev) => setEditForm({ ...editForm, description: ev.target.value })} />
                         <Input placeholder="Achievements (comma separated)" value={(editForm.achievements ?? []).join(", ")} onChange={(ev) => setEditForm({ ...editForm, achievements: ev.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />

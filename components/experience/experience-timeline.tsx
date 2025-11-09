@@ -54,7 +54,7 @@ export function ExperienceTimeline({ experiences }: { experiences: ExperienceIte
                 </div>
               </div>
               <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
-                {exp._kind === "industry" ? "Industry" : "Academic"}
+                {exp._kind === "industry" ? "Industry" : "Academic & Teaching"}
               </Badge>
             </div>
 

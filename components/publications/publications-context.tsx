@@ -46,7 +46,7 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
 
   const [paginationState, setPaginationState] = useState<PaginationState>({
     currentPage: 1,
-    itemsPerPage: 10,
+    itemsPerPage: 20,
     isLoading: false,
   })
 
@@ -123,15 +123,11 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
   const loadMore = () => {
     if (paginationState.isLoading || !hasMore) return
 
-    setPaginationState((prev) => ({ ...prev, isLoading: true }))
-
-    setTimeout(() => {
-      setPaginationState((prev) => ({
-        ...prev,
-        currentPage: prev.currentPage + 1,
-        isLoading: false,
-      }))
-    }, 500)
+    setPaginationState((prev) => ({
+      ...prev,
+      currentPage: prev.currentPage + 1,
+      isLoading: false,
+    }))
   }
 
   const setFilterStateWithReset = (state: FilterState) => {
