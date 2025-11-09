@@ -121,12 +121,18 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
   const hasMore = displayedPublications.length < sortedPublications.length
 
   const loadMore = () => {
-    if (paginationState.isLoading || !hasMore) return
+    if (!hasMore) return
+    console.log('[Publications] Load More clicked:', {
+      currentPage: paginationState.currentPage,
+      itemsPerPage: paginationState.itemsPerPage,
+      displayed: displayedPublications.length,
+      total: sortedPublications.length,
+      hasMore,
+    })
 
     setPaginationState((prev) => ({
       ...prev,
       currentPage: prev.currentPage + 1,
-      isLoading: false,
     }))
   }
 
