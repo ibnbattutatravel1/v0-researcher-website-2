@@ -13,10 +13,49 @@ export const metadata = {
   description: "Professional experience in AI hardware research, industry roles, and academic positions.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function ExperiencePage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showExperience) return notFound()
-  const experiences = await prisma.experience.findMany({ orderBy: { createdAt: "desc" } })
+  const experiencesRaw = await prisma.experience.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      position: true,
+      organization: true,
+      location: true,
+      duration: true,
+      type: true,
+      description: true,
+      achievements: true,
+      skills: true,
+    },
+  })
+  const experiences = experiencesRaw.map((e: any) => ({
+    position: e.position,
+    organization: e.organization,
+    location: e.location,
+    duration: e.duration,
+    type: e.type,
+    description: e.description,
+    achievements: Array.isArray(e.achievements)
+      ? (e.achievements as any[]).map(String)
+      : typeof e.achievements === "string"
+        ? String(e.achievements)
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [],
+    skills: Array.isArray(e.skills)
+      ? (e.skills as any[]).map(String)
+      : typeof e.skills === "string"
+        ? String(e.skills)
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [],
+  }))
   const cvUrl = settings?.cvUrl ?? "/cv/Mohammed_Fouda_CV.pdf"
   return (
     <div className="min-h-screen bg-background">

@@ -3,8 +3,8 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import { PublicationScheduler } from "@/components/publication-scheduler"
 import { Providers } from "@/components/providers"
+import { PublicationScheduler } from "@/components/publication-scheduler"
 import "./globals.css"
 
 const inter = Inter({

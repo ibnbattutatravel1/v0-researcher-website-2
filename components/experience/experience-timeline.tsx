@@ -17,8 +17,17 @@ type ExperienceItem = {
 }
 
 export function ExperienceTimeline({ experiences }: { experiences: ExperienceItem[] }) {
-  const industryExperiences = experiences.filter((exp) => exp.type === "industry")
-  const academicExperiences = experiences.filter((exp) => exp.type === "academic")
+  const normalizeType = (t: string) => {
+    const v = (t || "").toLowerCase().trim()
+    if (v.includes("acad")) return "academic" as const
+    if (v.includes("indust")) return "industry" as const
+    // default to industry to ensure it's visible even if type is missing
+    return "industry" as const
+  }
+
+  const withKind = experiences.map((exp) => ({ ...exp, _kind: normalizeType(exp.type as string) }))
+  const industryExperiences = withKind.filter((exp) => exp._kind === "industry")
+  const academicExperiences = withKind.filter((exp) => exp._kind === "academic")
 
   const TimelineSection = ({ title, experiences, icon: Icon }: any) => (
     <div className="space-y-6">
@@ -45,7 +54,7 @@ export function ExperienceTimeline({ experiences }: { experiences: ExperienceIte
                 </div>
               </div>
               <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
-                {exp.type === "industry" ? "Industry" : "Academic"}
+                {exp._kind === "industry" ? "Industry" : "Academic"}
               </Badge>
             </div>
 
