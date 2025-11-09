@@ -1,8 +1,7 @@
 import { NavigationServer } from "@/components/navigation-server"
 import { Footer } from "@/components/footer"
 import { ResearchHeader } from "@/components/research/research-header"
-import { ResearchFilters } from "@/components/research/research-filters"
-import { ProjectsGrid } from "@/components/research/projects-grid"
+import { ResearchBrowser } from "@/components/research/research-browser"
 import { Suspense } from "react"
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
@@ -22,11 +21,15 @@ export default async function ResearchPage() {
       <NavigationServer />
       <main className="py-12">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <ResearchHeader />
+          <ResearchHeader
+            activeProjects={settings?.researchActiveProjects || "15+"}
+            collaborations={settings?.researchCollaborations || "8"}
+            fundingRaised={settings?.researchFundingRaised || "$2.5M"}
+            patentsFiled={settings?.researchPatentsFiled || "12"}
+          />
           <div className="mt-12 space-y-8">
-            <ResearchFilters />
             <Suspense fallback={<div className="text-center py-12">Loading projects...</div>}>
-              <ProjectsGrid projects={projects as any} />
+              <ResearchBrowser projects={projects as any} />
             </Suspense>
           </div>
         </div>

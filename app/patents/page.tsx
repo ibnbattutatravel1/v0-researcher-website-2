@@ -19,7 +19,11 @@ export default async function PatentsPage() {
       <NavigationServer />
       <main className="py-12">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <PatentsHeader />
+          <PatentsHeader
+            total={settings?.patentsTotal || `${patents.length}`}
+            granted={settings?.patentsGranted || `${patents.filter((p) => p.status?.toLowerCase() === "granted").length}`}
+            pending={settings?.patentsPending || `${patents.filter((p) => p.status?.toLowerCase() !== "granted").length}`}
+          />
           <div className="mt-12">
             <PatentsList patents={patents as any} />
           </div>

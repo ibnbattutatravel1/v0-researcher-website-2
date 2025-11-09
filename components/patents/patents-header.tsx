@@ -1,4 +1,4 @@
-export function PatentsHeader() {
+export function PatentsHeader({ total, granted, pending }: { total: string; granted: string; pending: string }) {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -12,15 +12,15 @@ export function PatentsHeader() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="glass rounded-lg p-4 text-center glow-hover">
-          <div className="text-2xl font-bold text-accent">12</div>
+          <div className="text-2xl font-bold text-accent">{total}</div>
           <div className="text-sm text-muted-foreground">Total Patents</div>
         </div>
         <div className="glass rounded-lg p-4 text-center glow-hover">
-          <div className="text-2xl font-bold text-accent">8</div>
+          <div className="text-2xl font-bold text-accent">{granted}</div>
           <div className="text-sm text-muted-foreground">Granted</div>
         </div>
         <div className="glass rounded-lg p-4 text-center glow-hover">
-          <div className="text-2xl font-bold text-accent">4</div>
+          <div className="text-2xl font-bold text-accent">{pending}</div>
           <div className="text-sm text-muted-foreground">Pending</div>
         </div>
       </div>

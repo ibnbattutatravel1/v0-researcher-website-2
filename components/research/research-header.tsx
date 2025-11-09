@@ -1,6 +1,16 @@
 import { FadeIn } from "@/components/motion"
 
-export function ResearchHeader() {
+export function ResearchHeader({
+  activeProjects,
+  collaborations,
+  fundingRaised,
+  patentsFiled,
+}: {
+  activeProjects: string
+  collaborations: string
+  fundingRaised: string
+  patentsFiled: string
+}) {
   return (
     <FadeIn>
       <div className="space-y-8">
@@ -16,19 +26,19 @@ export function ResearchHeader() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">15+</div>
+            <div className="text-3xl font-bold text-gradient-accent">{activeProjects}</div>
             <div className="text-sm text-muted-foreground">Active Projects</div>
           </div>
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">8</div>
+            <div className="text-3xl font-bold text-gradient-accent">{collaborations}</div>
             <div className="text-sm text-muted-foreground">Collaborations</div>
           </div>
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">$2.5M</div>
+            <div className="text-3xl font-bold text-gradient-accent">{fundingRaised}</div>
             <div className="text-sm text-muted-foreground">Funding Raised</div>
           </div>
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">12</div>
+            <div className="text-3xl font-bold text-gradient-accent">{patentsFiled}</div>
             <div className="text-sm text-muted-foreground">Patents Filed</div>
           </div>
         </div>

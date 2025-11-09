@@ -27,6 +27,17 @@ model SiteSettings {
   showExperience Boolean  @default(true)
   showTalks      Boolean  @default(true)
   showContact    Boolean  @default(true)
+  // Admin-editable metrics for sections
+  researchActiveProjects String  @default("")
+  researchCollaborations String  @default("")
+  researchFundingRaised  String  @default("")
+  researchPatentsFiled   String  @default("")
+  patentsTotal           String  @default("")
+  patentsGranted         String  @default("")
+  patentsPending         String  @default("")
+  expYearsIndustry       String  @default("")
+  expPhdGPA              String  @default("")
+  expCoursesTaught       String  @default("")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -114,3 +125,24 @@ model Talk {
   updatedAt   DateTime @updatedAt
 }
 
+model Publication {
+  id           Int      @id @default(autoincrement())
+  title        String
+  authors      Json
+  venue        String
+  year         Int
+  type         String   @default("journal")
+  topic        String   @default("other")
+  citations    Int      @default(0)
+  impactFactor Float?
+  featured     Boolean  @default(false)
+  url          String?  @default("")
+  abstract     String?  @db.Text
+  doi          String?  @default("")
+  pdfUrl       String?  @default("")
+  bibtex       String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([title, year])
+}

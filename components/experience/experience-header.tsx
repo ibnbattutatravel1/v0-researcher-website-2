@@ -1,6 +1,6 @@
 import { FadeIn } from "@/components/motion"
 
-export function ExperienceHeader() {
+export function ExperienceHeader({ yearsIndustry, phdGPA, coursesTaught }: { yearsIndustry: string; phdGPA: string; coursesTaught: string }) {
   return (
     <FadeIn>
       <div className="space-y-8">
@@ -15,15 +15,15 @@ export function ExperienceHeader() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">5+</div>
+            <div className="text-3xl font-bold text-gradient-accent">{yearsIndustry}</div>
             <div className="text-sm text-muted-foreground">Years Industry</div>
           </div>
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">4.0</div>
+            <div className="text-3xl font-bold text-gradient-accent">{phdGPA}</div>
             <div className="text-sm text-muted-foreground">PhD GPA</div>
           </div>
           <div className="glass-primary rounded-xl p-6 text-center glow-hover hover-lift">
-            <div className="text-3xl font-bold text-gradient-accent">15+</div>
+            <div className="text-3xl font-bold text-gradient-accent">{coursesTaught}</div>
             <div className="text-sm text-muted-foreground">Courses Taught</div>
           </div>
         </div>

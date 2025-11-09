@@ -19,6 +19,16 @@ type Settings = {
   showExperience: boolean
   showTalks: boolean
   showContact: boolean
+  researchActiveProjects: string
+  researchCollaborations: string
+  researchFundingRaised: string
+  researchPatentsFiled: string
+  patentsTotal: string
+  patentsGranted: string
+  patentsPending: string
+  expYearsIndustry: string
+  expPhdGPA: string
+  expCoursesTaught: string
 }
 
 export function SiteSettings() {
@@ -36,6 +46,16 @@ export function SiteSettings() {
     showExperience: true,
     showTalks: true,
     showContact: true,
+    researchActiveProjects: "15+",
+    researchCollaborations: "8",
+    researchFundingRaised: "$2.5M",
+    researchPatentsFiled: "12",
+    patentsTotal: "12",
+    patentsGranted: "8",
+    patentsPending: "4",
+    expYearsIndustry: "5+",
+    expPhdGPA: "4.0",
+    expCoursesTaught: "15+",
   })
 
   useEffect(() => {
@@ -82,6 +102,64 @@ export function SiteSettings() {
           <div className="space-y-2">
             <Label htmlFor="heroDescription">Hero Description</Label>
             <Input id="heroDescription" value={settings.heroDescription} onChange={(e) => setSettings({ ...settings, heroDescription: e.target.value })} className="glass bg-transparent" />
+          </div>
+        </div>
+      </Card>
+
+      <Card className="glass p-6 space-y-6">
+        <h3 className="text-lg font-semibold">Research Metrics</h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="researchActiveProjects">Active Projects</Label>
+            <Input id="researchActiveProjects" value={settings.researchActiveProjects} onChange={(e) => setSettings({ ...settings, researchActiveProjects: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="researchCollaborations">Collaborations</Label>
+            <Input id="researchCollaborations" value={settings.researchCollaborations} onChange={(e) => setSettings({ ...settings, researchCollaborations: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="researchFundingRaised">Funding Raised</Label>
+            <Input id="researchFundingRaised" value={settings.researchFundingRaised} onChange={(e) => setSettings({ ...settings, researchFundingRaised: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="researchPatentsFiled">Patents Filed</Label>
+            <Input id="researchPatentsFiled" value={settings.researchPatentsFiled} onChange={(e) => setSettings({ ...settings, researchPatentsFiled: e.target.value })} className="glass bg-transparent" />
+          </div>
+        </div>
+      </Card>
+
+      <Card className="glass p-6 space-y-6">
+        <h3 className="text-lg font-semibold">Patents Metrics</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="patentsTotal">Total Patents</Label>
+            <Input id="patentsTotal" value={settings.patentsTotal} onChange={(e) => setSettings({ ...settings, patentsTotal: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="patentsGranted">Granted</Label>
+            <Input id="patentsGranted" value={settings.patentsGranted} onChange={(e) => setSettings({ ...settings, patentsGranted: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="patentsPending">Pending</Label>
+            <Input id="patentsPending" value={settings.patentsPending} onChange={(e) => setSettings({ ...settings, patentsPending: e.target.value })} className="glass bg-transparent" />
+          </div>
+        </div>
+      </Card>
+
+      <Card className="glass p-6 space-y-6">
+        <h3 className="text-lg font-semibold">Experience Metrics</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="expYearsIndustry">Years Industry</Label>
+            <Input id="expYearsIndustry" value={settings.expYearsIndustry} onChange={(e) => setSettings({ ...settings, expYearsIndustry: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="expPhdGPA">PhD GPA</Label>
+            <Input id="expPhdGPA" value={settings.expPhdGPA} onChange={(e) => setSettings({ ...settings, expPhdGPA: e.target.value })} className="glass bg-transparent" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="expCoursesTaught">Courses Taught</Label>
+            <Input id="expCoursesTaught" value={settings.expCoursesTaught} onChange={(e) => setSettings({ ...settings, expCoursesTaught: e.target.value })} className="glass bg-transparent" />
           </div>
         </div>
       </Card>

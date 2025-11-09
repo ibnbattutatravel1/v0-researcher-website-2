@@ -1,7 +1,7 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
-import { publications } from "@/data/publications"
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
+import type { Publication } from "@/data/publications"
 
 export interface FilterState {
   searchQuery: string
@@ -22,9 +22,9 @@ interface PaginationState {
 interface PublicationsContextType {
   filterState: FilterState
   setFilterState: (state: FilterState) => void
-  filteredPublications: typeof publications
+  filteredPublications: Publication[]
   totalCount: number
-  displayedPublications: typeof publications
+  displayedPublications: Publication[]
   hasMore: boolean
   isLoading: boolean
   loadMore: () => void
@@ -33,6 +33,7 @@ interface PublicationsContextType {
 const PublicationsContext = createContext<PublicationsContextType | undefined>(undefined)
 
 export function PublicationsProvider({ children }: { children: ReactNode }) {
+  const [allPublications, setAllPublications] = useState<Publication[]>([])
   const [filterState, setFilterState] = useState<FilterState>({
     searchQuery: "",
     years: [],
@@ -49,7 +50,25 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
     isLoading: false,
   })
 
-  const filteredPublications = publications.filter((publication) => {
+  useEffect(() => {
+    let mounted = true
+    const load = async () => {
+      try {
+        setPaginationState((p) => ({ ...p, isLoading: true }))
+        const res = await fetch("/api/publications", { cache: "no-store" })
+        const data: Publication[] = await res.json()
+        if (mounted) setAllPublications(data)
+      } finally {
+        if (mounted) setPaginationState((p) => ({ ...p, isLoading: false }))
+      }
+    }
+    load()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const filteredPublications = allPublications.filter((publication) => {
     if (filterState.searchQuery) {
       const query = filterState.searchQuery.toLowerCase()
       const matchesTitle = publication.title.toLowerCase().includes(query)
@@ -126,7 +145,7 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
         filterState,
         setFilterState: setFilterStateWithReset,
         filteredPublications: sortedPublications,
-        totalCount: publications.length,
+        totalCount: allPublications.length,
         displayedPublications,
         hasMore,
         isLoading: paginationState.isLoading,

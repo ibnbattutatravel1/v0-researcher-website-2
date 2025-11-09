@@ -132,7 +132,14 @@ export function ExperienceManager() {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Duration" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} />
-              <Input placeholder="Type (industry/academic)" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} />
+              <select
+                className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm"
+                value={form.type}
+                onChange={(e) => setForm({ ...form, type: e.target.value })}
+              >
+                <option value="industry">Industry</option>
+                <option value="academic">Academic</option>
+              </select>
             </div>
             <Textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
             <Input placeholder="Achievements (comma separated)" value={(form.achievements ?? []).join(", ")} onChange={(e) => setForm({ ...form, achievements: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
@@ -182,7 +189,14 @@ export function ExperienceManager() {
                           <Input placeholder="Location" value={editForm.location} onChange={(ev) => setEditForm({ ...editForm, location: ev.target.value })} />
                           <Input placeholder="Duration" value={editForm.duration} onChange={(ev) => setEditForm({ ...editForm, duration: ev.target.value })} />
                         </div>
-                        <Input placeholder="Type (industry/academic)" value={editForm.type} onChange={(ev) => setEditForm({ ...editForm, type: ev.target.value })} />
+                        <select
+                          className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm"
+                          value={editForm.type}
+                          onChange={(ev) => setEditForm({ ...editForm, type: ev.target.value })}
+                        >
+                          <option value="industry">Industry</option>
+                          <option value="academic">Academic</option>
+                        </select>
                         <Textarea placeholder="Description" value={editForm.description} onChange={(ev) => setEditForm({ ...editForm, description: ev.target.value })} />
                         <Input placeholder="Achievements (comma separated)" value={(editForm.achievements ?? []).join(", ")} onChange={(ev) => setEditForm({ ...editForm, achievements: ev.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
                         <Input placeholder="Skills (comma separated)" value={(editForm.skills ?? []).join(", ")} onChange={(ev) => setEditForm({ ...editForm, skills: ev.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />

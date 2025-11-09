@@ -23,7 +23,11 @@ export default async function ExperiencePage() {
       <NavigationServer />
       <main className="py-12">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <ExperienceHeader />
+          <ExperienceHeader
+            yearsIndustry={settings?.expYearsIndustry || "5+"}
+            phdGPA={settings?.expPhdGPA || "4.0"}
+            coursesTaught={settings?.expCoursesTaught || "15+"}
+          />
           <div className="mt-12">
             <ExperienceTimeline experiences={experiences as any} />
           </div>

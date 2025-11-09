@@ -1,21 +1,20 @@
-import { publicationMetrics } from "@/data/publications"
 import { GlassCard } from "@/components/ui/glass-card"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function MetricsSection() {
+export function MetricsSection({ totalPublications, hIndex, totalCitations }: { totalPublications: number; hIndex: number; totalCitations: number }) {
   const metrics = [
     {
-      value: `${publicationMetrics.totalPublications}+`,
+      value: `${totalPublications}+`,
       label: "Publications",
       description: "Peer-reviewed papers",
     },
     {
-      value: publicationMetrics.hIndex.toString(),
+      value: hIndex.toString(),
       label: "h-index",
       description: "Citation impact",
     },
     {
-      value: `${Math.floor(publicationMetrics.totalCitations / 1000)}K+`,
+      value: `${Math.floor(totalCitations / 1000)}K+`,
       label: "Citations",
       description: "Research influence",
     },

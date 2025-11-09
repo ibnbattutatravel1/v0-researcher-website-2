@@ -1,12 +1,22 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, FileText } from "lucide-react"
-import { getFeaturedPublications } from "@/data/publications"
 import { GlassCard } from "@/components/ui/glass-card"
 import { FadeIn, StaggerContainer } from "@/components/motion"
 
-export function FeaturedWorksSection() {
-  const featuredWorks = getFeaturedPublications()
+type Work = {
+  title: string
+  venue: string
+  year: number
+  citations?: number
+  impactFactor?: number | null
+  doi?: string | null
+  pdfUrl?: string | null
+  topic?: string | null
+}
+
+export function FeaturedWorksSection({ works }: { works: Work[] }) {
+  const featuredWorks = works
 
   return (
     <section className="py-20">

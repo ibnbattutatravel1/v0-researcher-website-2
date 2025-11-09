@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Filter, X } from "lucide-react"
@@ -17,24 +17,38 @@ const themes = [
 
 const statuses = ["Active", "Completed", "Ongoing", "Planned"]
 
-export function ResearchFilters() {
+export function ResearchFilters({ onChange }: { onChange?: (filters: { themes: string[]; statuses: string[] }) => void }) {
   const [selectedThemes, setSelectedThemes] = useState<string[]>([])
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
 
   const toggleTheme = (theme: string) => {
-    setSelectedThemes((prev) => (prev.includes(theme) ? prev.filter((t) => t !== theme) : [...prev, theme]))
+    setSelectedThemes((prev) => {
+      const next = prev.includes(theme) ? prev.filter((t) => t !== theme) : [...prev, theme]
+      onChange?.({ themes: next, statuses: selectedStatuses })
+      return next
+    })
   }
 
   const toggleStatus = (status: string) => {
-    setSelectedStatuses((prev) => (prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]))
+    setSelectedStatuses((prev) => {
+      const next = prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
+      onChange?.({ themes: selectedThemes, statuses: next })
+      return next
+    })
   }
 
   const clearAllFilters = () => {
     setSelectedThemes([])
     setSelectedStatuses([])
+    onChange?.({ themes: [], statuses: [] })
   }
 
   const hasActiveFilters = selectedThemes.length > 0 || selectedStatuses.length > 0
+
+  useEffect(() => {
+    onChange?.({ themes: selectedThemes, statuses: selectedStatuses })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="space-y-6">

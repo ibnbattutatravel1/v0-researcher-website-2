@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE `SiteSettings` ADD COLUMN `expCoursesTaught` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `expPhdGPA` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `expYearsIndustry` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `patentsGranted` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `patentsPending` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `patentsTotal` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `researchActiveProjects` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `researchCollaborations` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `researchFundingRaised` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `researchPatentsFiled` VARCHAR(191) NOT NULL DEFAULT '';
