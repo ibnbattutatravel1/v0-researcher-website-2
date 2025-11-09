@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, FileText, Star, Quote, ChevronDown, Loader2 } from "lucide-react"
 import { usePublications } from "./publications-context"
-import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/motion"
+import { HoverLift } from "@/components/motion"
 
 export function PublicationsList() {
   const {
@@ -86,9 +86,9 @@ export function PublicationsList() {
           </Button>
         </div>
       ) : (
-        <StaggerContainer className="card-grid">
+        <div className="card-grid">
           {displayedPublications.map((publication) => (
-            <StaggerItem key={`${publication.title}-${publication.year}-${publication.id || ''}`}>
+            <div key={publication.id ?? `${publication.title}-${publication.year}`}>
               <HoverLift>
                 <GlassCard className="glass-primary card-spacing space-y-4 glow-hover">
                   <div className="space-y-3">
@@ -169,9 +169,9 @@ export function PublicationsList() {
                   </div>
                 </GlassCard>
               </HoverLift>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
       )}
 
       {filteredPublications.length > 0 && hasMore && (
