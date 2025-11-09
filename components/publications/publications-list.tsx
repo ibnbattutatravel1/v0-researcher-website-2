@@ -87,8 +87,8 @@ export function PublicationsList() {
         </div>
       ) : (
         <StaggerContainer className="card-grid">
-          {displayedPublications.map((publication, index) => (
-            <StaggerItem key={index}>
+          {displayedPublications.map((publication) => (
+            <StaggerItem key={`${publication.title}-${publication.year}-${publication.id || ''}`}>
               <HoverLift>
                 <GlassCard className="glass-primary card-spacing space-y-4 glow-hover">
                   <div className="space-y-3">

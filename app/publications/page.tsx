@@ -5,6 +5,7 @@ import { PublicationsFilters } from "@/components/publications/publications-filt
 import { PublicationsList } from "@/components/publications/publications-list"
 import { PublicationsProvider } from "@/components/publications/publications-context"
 import { Suspense } from "react"
+import { prisma } from "@/lib/prisma"
 
 export const metadata = {
   title: "Publications - Mohammed E. Fouda",
@@ -12,7 +13,13 @@ export const metadata = {
     "Complete list of research publications in AI hardware, neuromorphic computing, and hardware-software co-design.",
 }
 
-export default function PublicationsPage() {
+export default async function PublicationsPage() {
+  const publications = await prisma.publication.findMany({ orderBy: [{ year: "desc" }, { citations: "desc" }] })
+  const serializedPubs = publications.map((p: any) => ({
+    ...p,
+    authors: Array.isArray(p.authors) ? p.authors.map(String) : [],
+    impactFactor: p.impactFactor ? Number(p.impactFactor) : null,
+  }))
   return (
     <div className="min-h-screen bg-background">
       <NavigationServer />
@@ -20,7 +27,7 @@ export default function PublicationsPage() {
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <PublicationsHeader />
           <div className="mt-12 space-y-8">
-            <PublicationsProvider>
+            <PublicationsProvider initialPublications={serializedPubs as any}>
               <PublicationsFilters />
               <Suspense fallback={<div className="text-center py-12">Loading publications...</div>}>
                 <PublicationsList />

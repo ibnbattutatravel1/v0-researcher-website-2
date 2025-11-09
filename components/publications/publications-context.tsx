@@ -32,8 +32,8 @@ interface PublicationsContextType {
 
 const PublicationsContext = createContext<PublicationsContextType | undefined>(undefined)
 
-export function PublicationsProvider({ children }: { children: ReactNode }) {
-  const [allPublications, setAllPublications] = useState<Publication[]>([])
+export function PublicationsProvider({ children, initialPublications = [] }: { children: ReactNode; initialPublications?: Publication[] }) {
+  const [allPublications, setAllPublications] = useState<Publication[]>(initialPublications)
   const [filterState, setFilterState] = useState<FilterState>({
     searchQuery: "",
     years: [],
@@ -51,6 +51,9 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
   })
 
   useEffect(() => {
+    // Only fetch if no initial data provided
+    if (initialPublications.length > 0) return
+    
     let mounted = true
     const load = async () => {
       try {
@@ -66,7 +69,7 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [initialPublications.length])
 
   const filteredPublications = allPublications.filter((publication) => {
     if (filterState.searchQuery) {
@@ -119,6 +122,15 @@ export function PublicationsProvider({ children }: { children: ReactNode }) {
 
   const displayedPublications = sortedPublications.slice(0, paginationState.currentPage * paginationState.itemsPerPage)
   const hasMore = displayedPublications.length < sortedPublications.length
+  
+  console.log('[Publications Context]', {
+    sortedTotal: sortedPublications.length,
+    currentPage: paginationState.currentPage,
+    itemsPerPage: paginationState.itemsPerPage,
+    shouldDisplay: paginationState.currentPage * paginationState.itemsPerPage,
+    actualDisplayed: displayedPublications.length,
+    hasMore,
+  })
 
   const loadMore = () => {
     if (!hasMore) return
