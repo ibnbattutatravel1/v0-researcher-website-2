@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -8,6 +9,14 @@ import { usePublications } from "./publications-context"
 
 export function PublicationsFilters() {
   const { filterState, setFilterState, availableYears, availableVenues, availableTopics, availableTypes } = usePublications()
+
+  // Since Venue filter is hidden for now, ensure no Venue chips remain active
+  useEffect(() => {
+    if (filterState.venues.length > 0) {
+      setFilterState({ ...filterState, venues: [] })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const toggleFilter = (category: keyof typeof filterState, value: string | boolean) => {
     if (category === "featured") {
@@ -104,23 +113,7 @@ export function PublicationsFilters() {
           </div>
         </div>
 
-        {/* Venue Filter */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">Venue</label>
-          <div className="flex flex-wrap gap-2">
-            {availableVenues.map((venue) => (
-              <Button
-                key={venue}
-                variant={filterState.venues.includes(venue) ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleFilter("venues", venue)}
-                className={filterState.venues.includes(venue) ? "glow" : "bg-transparent"}
-              >
-                {venue}
-              </Button>
-            ))}
-          </div>
-        </div>
+        
 
         {/* Topic Filter */}
         <div className="space-y-2">
@@ -178,13 +171,12 @@ export function PublicationsFilters() {
               </button>
             </Badge>
           )}
-          {[...filterState.years, ...filterState.venues, ...filterState.topics, ...filterState.types].map((filter) => (
+          {[...filterState.years, /* venues hidden */ ...filterState.topics, ...filterState.types].map((filter) => (
             <Badge key={filter} variant="secondary" className="bg-accent/10 text-accent border-accent/20">
               {filter}
               <button
                 onClick={() => {
                   if (filterState.years.includes(filter)) toggleFilter("years", filter)
-                  else if (filterState.venues.includes(filter)) toggleFilter("venues", filter)
                   else if (filterState.topics.includes(filter)) toggleFilter("topics", filter)
                   else if (filterState.types.includes(filter)) toggleFilter("types", filter)
                 }}

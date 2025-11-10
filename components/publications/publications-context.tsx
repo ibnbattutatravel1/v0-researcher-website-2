@@ -90,8 +90,12 @@ export function PublicationsProvider({ children, initialPublications = [] }: { c
       return false
     }
 
-    if (filterState.years.length > 0 && !filterState.years.includes(publication.year.toString())) {
-      return false
+      if (filterState.years.length > 0) {
+      const pubYears = (String((publication as any).year ?? "").match(/\d{4}/g) ?? [String(publication.year)])
+      const yearOk = pubYears.some((y) => filterState.years.includes(y))
+      if (!yearOk) {
+        return false
+      }
     }
 
     if (filterState.venues.length > 0 && !filterState.venues.includes(publication.venue)) {
@@ -153,7 +157,17 @@ export function PublicationsProvider({ children, initialPublications = [] }: { c
   }
 
   // Derive filter option lists from all publications (not filtered)
-  const availableYears = Array.from(new Set(allPublications.map((p) => String(p.year)))).sort((a, b) => Number(b) - Number(a))
+  const availableYears = Array.from(
+    new Set(
+      allPublications.flatMap((p) => {
+        const y = String((p as any).year ?? "")
+        const matches = y.match(/\d{4}/g) ?? []
+        return matches
+      }),
+    ),
+  )
+    .filter((y) => y !== "0")
+    .sort((a, b) => Number(b) - Number(a))
   const availableVenues = Array.from(new Set(allPublications.map((p) => p.venue))).sort((a, b) =>
     a.localeCompare(b, undefined, { sensitivity: "base" }),
   )

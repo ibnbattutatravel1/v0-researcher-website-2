@@ -108,7 +108,9 @@ export function PublicationsList() {
                             {publication.venue}
                           </Badge>
                           <span className="text-muted-foreground">•</span>
-                          <span className="text-muted-foreground">{publication.year}</span>
+                          <span className="text-muted-foreground">
+                            {String((publication as any).year ?? "").match(/\d{4}/)?.[0] ?? publication.year}
+                          </span>
                           {publication.citations && (
                             <>
                               <span className="text-muted-foreground">•</span>
