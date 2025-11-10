@@ -103,8 +103,8 @@ export function PublicationsList() {
 
                         <p className="text-sm text-muted-foreground">{publication.authors.join(", ")}</p>
 
-                        <div className="flex items-center space-x-2 text-sm">
-                          <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
+                        <div className="flex items-center space-x-2 text-xs sm:text-sm">
+                          <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 text-[11px] sm:text-xs">
                             {publication.venue}
                           </Badge>
                           <span className="text-muted-foreground">•</span>
@@ -130,23 +130,27 @@ export function PublicationsList() {
                     <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center space-x-2">
                         {publication.pdfUrl && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="glass-secondary text-accent hover:text-foreground"
-                          >
-                            <FileText className="mr-1 h-3 w-3" />
-                            PDF
+                          <Button asChild variant="ghost" size="sm" className="glass-secondary text-accent hover:text-foreground">
+                            <a href={publication.pdfUrl} target="_blank" rel="noopener noreferrer">
+                              <FileText className="mr-1 h-3 w-3" />
+                              PDF
+                            </a>
                           </Button>
                         )}
                         {publication.doi && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="glass-secondary text-accent hover:text-foreground"
-                          >
-                            <ExternalLink className="mr-1 h-3 w-3" />
-                            DOI
+                          <Button asChild variant="ghost" size="sm" className="glass-secondary text-accent hover:text-foreground">
+                            <a href={`https://doi.org/${publication.doi}`} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="mr-1 h-3 w-3" />
+                              DOI
+                            </a>
+                          </Button>
+                        )}
+                        {publication.url && (
+                          <Button asChild variant="ghost" size="sm" className="glass-secondary text-accent hover:text-foreground">
+                            <a href={publication.url} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="mr-1 h-3 w-3" />
+                              Link
+                            </a>
                           </Button>
                         )}
                         {publication.bibtex && (
@@ -162,8 +166,14 @@ export function PublicationsList() {
                         )}
                       </div>
 
-                      <div className="text-xs text-muted-foreground">
-                        {publication.type} • Impact Factor: {publication.impactFactor || "N/A"}
+                      <div className="text-[11px] sm:text-xs text-muted-foreground">
+                        {publication.type}
+                        {publication.impactFactor != null && (
+                          <>
+                            <span className="mx-1 text-muted-foreground">•</span>
+                            <span>Impact Factor: {Number(publication.impactFactor).toFixed(2)}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

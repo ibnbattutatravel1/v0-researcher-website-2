@@ -28,6 +28,10 @@ interface PublicationsContextType {
   hasMore: boolean
   isLoading: boolean
   loadMore: () => void
+  availableYears: string[]
+  availableVenues: string[]
+  availableTopics: string[]
+  availableTypes: string[]
 }
 
 const PublicationsContext = createContext<PublicationsContextType | undefined>(undefined)
@@ -148,6 +152,18 @@ export function PublicationsProvider({ children, initialPublications = [] }: { c
     }))
   }
 
+  // Derive filter option lists from all publications (not filtered)
+  const availableYears = Array.from(new Set(allPublications.map((p) => String(p.year)))).sort((a, b) => Number(b) - Number(a))
+  const availableVenues = Array.from(new Set(allPublications.map((p) => p.venue))).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" }),
+  )
+  const availableTopics = Array.from(new Set(allPublications.map((p) => p.topic).filter(Boolean))).sort((a, b) =>
+    (a || "").localeCompare(b || "", undefined, { sensitivity: "base" }),
+  ) as string[]
+  const availableTypes = Array.from(new Set(allPublications.map((p) => p.type))).sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" }),
+  )
+
   const setFilterStateWithReset = (state: FilterState) => {
     setFilterState(state)
     setPaginationState((prev) => ({ ...prev, currentPage: 1 }))
@@ -164,6 +180,10 @@ export function PublicationsProvider({ children, initialPublications = [] }: { c
         hasMore,
         isLoading: paginationState.isLoading,
         loadMore,
+        availableYears,
+        availableVenues,
+        availableTopics,
+        availableTypes,
       }}
     >
       {children}

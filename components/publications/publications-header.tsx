@@ -29,12 +29,6 @@ export function PublicationsHeader() {
               Export All BibTeX
             </Link>
           </Button>
-          <Button asChild variant="outline" className="glass-secondary glow-hover">
-            <Link href="/admin/sync">
-              <Settings className="mr-2 h-4 w-4" />
-              Sync Dashboard
-            </Link>
-          </Button>
         </div>
       </div>
     </FadeIn>

@@ -6,20 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Filter, X } from "lucide-react"
 import { usePublications } from "./publications-context"
 
-const years = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"]
-const venues = [
-  "IEEE TNNLS",
-  "Nature",
-  "Proceedings of IEEE",
-  "IEEE TCAS",
-  "IEEE EDGE",
-  "Light: Science & Applications",
-]
-const topics = ["Neuromorphic Computing", "AI Hardware", "Quantization", "SNN", "ReRAM", "Hardware-Software Co-design"]
-const types = ["Journal", "Conference", "Preprint", "Book Chapter"]
-
 export function PublicationsFilters() {
-  const { filterState, setFilterState } = usePublications()
+  const { filterState, setFilterState, availableYears, availableVenues, availableTopics, availableTypes } = usePublications()
 
   const toggleFilter = (category: keyof typeof filterState, value: string | boolean) => {
     if (category === "featured") {
@@ -102,7 +90,7 @@ export function PublicationsFilters() {
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Year</label>
           <div className="flex flex-wrap gap-2">
-            {years.map((year) => (
+            {availableYears.map((year) => (
               <Button
                 key={year}
                 variant={filterState.years.includes(year) ? "default" : "outline"}
@@ -120,7 +108,7 @@ export function PublicationsFilters() {
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Venue</label>
           <div className="flex flex-wrap gap-2">
-            {venues.map((venue) => (
+            {availableVenues.map((venue) => (
               <Button
                 key={venue}
                 variant={filterState.venues.includes(venue) ? "default" : "outline"}
@@ -138,7 +126,7 @@ export function PublicationsFilters() {
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Topic</label>
           <div className="flex flex-wrap gap-2">
-            {topics.map((topic) => (
+            {availableTopics.map((topic) => (
               <Button
                 key={topic}
                 variant={filterState.topics.includes(topic) ? "default" : "outline"}
@@ -156,7 +144,7 @@ export function PublicationsFilters() {
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Type</label>
           <div className="flex flex-wrap gap-2">
-            {types.map((type) => (
+            {availableTypes.map((type) => (
               <Button
                 key={type}
                 variant={filterState.types.includes(type) ? "default" : "outline"}
@@ -195,10 +183,10 @@ export function PublicationsFilters() {
               {filter}
               <button
                 onClick={() => {
-                  if (years.includes(filter)) toggleFilter("years", filter)
-                  else if (venues.includes(filter)) toggleFilter("venues", filter)
-                  else if (topics.includes(filter)) toggleFilter("topics", filter)
-                  else if (types.includes(filter)) toggleFilter("types", filter)
+                  if (filterState.years.includes(filter)) toggleFilter("years", filter)
+                  else if (filterState.venues.includes(filter)) toggleFilter("venues", filter)
+                  else if (filterState.topics.includes(filter)) toggleFilter("topics", filter)
+                  else if (filterState.types.includes(filter)) toggleFilter("types", filter)
                 }}
                 className="ml-1 hover:text-foreground"
               >
