@@ -29,6 +29,9 @@ type Settings = {
   expYearsIndustry: string
   expPhdGPA: string
   expCoursesTaught: string
+  customTotalPublications: number | null
+  customHIndex: number | null
+  customTotalCitations: number | null
 }
 
 export function SiteSettings() {
@@ -56,6 +59,9 @@ export function SiteSettings() {
     expYearsIndustry: "5+",
     expPhdGPA: "4.0",
     expCoursesTaught: "15+",
+    customTotalPublications: null,
+    customHIndex: null,
+    customTotalCitations: null,
   })
 
   useEffect(() => {
@@ -74,10 +80,24 @@ export function SiteSettings() {
   const handleSave = async () => {
     setSaving(true)
     try {
+      // Ensure numeric overrides are sent as numbers or null
+      const payload = {
+        ...settings,
+        customTotalPublications:
+          settings.customTotalPublications === null || Number.isNaN(settings.customTotalPublications)
+            ? null
+            : settings.customTotalPublications,
+        customHIndex:
+          settings.customHIndex === null || Number.isNaN(settings.customHIndex) ? null : settings.customHIndex,
+        customTotalCitations:
+          settings.customTotalCitations === null || Number.isNaN(settings.customTotalCitations)
+            ? null
+            : settings.customTotalCitations,
+      }
       await fetch("/api/admin/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(payload),
       })
     } finally {
       setSaving(false)
@@ -124,6 +144,54 @@ export function SiteSettings() {
           <div className="space-y-2">
             <Label htmlFor="researchPatentsFiled">Patents Filed</Label>
             <Input id="researchPatentsFiled" value={settings.researchPatentsFiled} onChange={(e) => setSettings({ ...settings, researchPatentsFiled: e.target.value })} className="glass bg-transparent" />
+          </div>
+        </div>
+      </Card>
+
+      <Card className="glass p-6 space-y-6">
+        <h3 className="text-lg font-semibold">Homepage Metrics Overrides</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="customTotalPublications">Total Publications</Label>
+            <Input
+              id="customTotalPublications"
+              type="number"
+              value={settings.customTotalPublications ?? ""}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  customTotalPublications: e.target.value === "" ? null : Number(e.target.value),
+                })
+              }
+              className="glass bg-transparent"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="customHIndex">h-index</Label>
+            <Input
+              id="customHIndex"
+              type="number"
+              value={settings.customHIndex ?? ""}
+              onChange={(e) =>
+                setSettings({ ...settings, customHIndex: e.target.value === "" ? null : Number(e.target.value) })
+              }
+              className="glass bg-transparent"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="customTotalCitations">Total Citations</Label>
+            <Input
+              id="customTotalCitations"
+              type="number"
+              value={settings.customTotalCitations ?? ""}
+              onChange={(e) =>
+                setSettings({
+                  ...settings,
+                  customTotalCitations: e.target.value === "" ? null : Number(e.target.value),
+                })
+              }
+              className="glass bg-transparent"
+            />
           </div>
         </div>
       </Card>

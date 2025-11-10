@@ -38,6 +38,10 @@ model SiteSettings {
   expYearsIndustry       String  @default("")
   expPhdGPA              String  @default("")
   expCoursesTaught       String  @default("")
+  // Homepage metrics overrides (fallback to computed values when null)
+  customTotalPublications Int?
+  customHIndex            Int?
+  customTotalCitations    Int?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }

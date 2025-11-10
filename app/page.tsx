@@ -10,8 +10,8 @@ export default async function HomePage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   // Compute publication metrics from DB
   const pubs = await prisma.publication.findMany({ select: { citations: true, title: true, venue: true, year: true, impactFactor: true, url: true, doi: true, topic: true }, orderBy: [{ citations: "desc" }, { year: "desc" }] })
-  const totalPublications = pubs.length
-  const totalCitations = pubs.reduce((sum, p) => sum + (p.citations || 0), 0)
+  const computedTotalPublications = pubs.length
+  const computedTotalCitations = pubs.reduce((sum, p) => sum + (p.citations || 0), 0)
   // h-index: max i such that citations >= i
   const sortedCites = [...pubs].map((p) => p.citations || 0).sort((a, b) => b - a)
   let hIndex = 0
@@ -19,6 +19,12 @@ export default async function HomePage() {
     if (sortedCites[i] >= i + 1) hIndex = i + 1
     else break
   }
+  const computedHIndex = hIndex
+
+  // Apply admin overrides if provided in settings
+  const totalPublications = settings?.customTotalPublications ?? computedTotalPublications
+  const totalCitations = settings?.customTotalCitations ?? computedTotalCitations
+  hIndex = settings?.customHIndex ?? computedHIndex
   const featuredWorks = pubs.slice(0, 4).map((p) => ({
     title: p.title,
     venue: p.venue,
