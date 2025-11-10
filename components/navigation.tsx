@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Menu, X } from "lucide-react"
-import { HoverLift, GlowOnHover } from "@/components/motion"
+import { HoverLift } from "@/components/motion"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import List from "@mui/material/List"
@@ -58,17 +58,10 @@ export function Navigation({
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 group">
-            <GlowOnHover>
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/40 bg-gradient-to-br from-accent/20 to-transparent overflow-hidden">
-                <span className="absolute inset-0 blur-md opacity-30" style={{ boxShadow: "0 0 24px 8px rgba(66,232,224,0.35)" }} />
-                <img src="/brand-logo.svg" alt="MEF Logo" className="relative h-5 w-5 opacity-90 transition-opacity group-hover:opacity-100" />
-              </span>
-            </GlowOnHover>
             <div className="leading-tight">
               <span className="block text-base sm:text-lg font-bold text-gradient-accent">
                 Mohammed E. Fouda
               </span>
-              <span className="block text-[11px] sm:text-xs text-muted-foreground">Ph.D., SMIEEE</span>
             </div>
           </Link>
 
