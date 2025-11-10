@@ -4,7 +4,8 @@
 # 1) Builder: install deps (incl. dev), generate prisma client, and build next
 FROM node:20-bookworm-slim AS builder
 ENV NODE_ENV=production \
-    NEXT_TELEMETRY_DISABLED=1
+    NEXT_TELEMETRY_DISABLED=1 \
+    SKIP_DB=1
 # Enable pnpm via corepack
 RUN corepack enable && apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
@@ -19,6 +20,8 @@ RUN pnpm prisma generate
 
 # Copy the rest of the app and build
 COPY . .
+# Ensure no .env files end up in the builder (defense-in-depth)
+RUN rm -f .env .env.* || true
 RUN pnpm build
 
 # 2) Runner: minimal production image using Next.js standalone output

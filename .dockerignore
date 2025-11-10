@@ -7,6 +7,9 @@ node_modules
 .next/server
 .next/static
 coverage
+# Do not include env files in build context
+.env
+.env.*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -10,6 +10,9 @@ export const metadata = {
   description: "Invited talks, tutorials, and media appearances on AI hardware and neuromorphic computing.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function TalksPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showTalks) return notFound()

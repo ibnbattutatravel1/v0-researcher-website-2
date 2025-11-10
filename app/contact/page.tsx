@@ -11,6 +11,9 @@ export const metadata = {
   description: "Get in touch for research collaborations, speaking opportunities, or professional inquiries.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function ContactPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showContact) return notFound()

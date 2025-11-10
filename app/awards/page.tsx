@@ -10,6 +10,9 @@ export const metadata = {
   description: "Recognition for contributions to AI hardware research and neuromorphic computing.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function AwardsPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showAwards) return notFound()

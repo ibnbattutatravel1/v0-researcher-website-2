@@ -10,6 +10,9 @@ export const metadata = {
   description: "Intellectual property portfolio in AI hardware, neuromorphic computing, and memory technologies.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function PatentsPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showPatents) return notFound()

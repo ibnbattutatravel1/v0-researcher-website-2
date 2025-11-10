@@ -12,6 +12,9 @@ export const metadata = {
     "Research projects in neuromorphic hardware, AI accelerators, quantization techniques, and hardware-software co-design.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function ResearchPage() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
   if (settings && !settings.showResearch) return notFound()

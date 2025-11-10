@@ -13,6 +13,9 @@ export const metadata = {
     "Complete list of research publications in AI hardware, neuromorphic computing, and hardware-software co-design.",
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function PublicationsPage() {
   const publications = await prisma.publication.findMany({ orderBy: [{ year: "desc" }, { citations: "desc" }] })
   const serializedPubs = publications.map((p: any) => ({

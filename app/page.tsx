@@ -6,10 +6,19 @@ import { FeaturedWorksSection } from "@/components/featured-works-section"
 import { CTASection } from "@/components/cta-section"
 import { prisma } from "@/lib/prisma"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function HomePage() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } })
-  // Compute publication metrics from DB
-  const pubs = await prisma.publication.findMany({ select: { citations: true, title: true, venue: true, year: true, impactFactor: true, url: true, doi: true, topic: true }, orderBy: [{ citations: "desc" }, { year: "desc" }] })
+  const SKIP_DB = process.env.SKIP_DB === "1"
+  const settings = SKIP_DB ? null : await prisma.siteSettings.findUnique({ where: { id: 1 } })
+  // Compute publication metrics from DB (or use empty when skipping DB at build time)
+  const pubs = SKIP_DB
+    ? []
+    : await prisma.publication.findMany({
+        select: { citations: true, title: true, venue: true, year: true, impactFactor: true, url: true, doi: true, topic: true },
+        orderBy: [{ citations: "desc" }, { year: "desc" }],
+      })
   const computedTotalPublications = pubs.length
   const computedTotalCitations = pubs.reduce((sum, p) => sum + (p.citations || 0), 0)
   // h-index: max i such that citations >= i
