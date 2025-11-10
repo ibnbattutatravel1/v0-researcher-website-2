@@ -5,50 +5,42 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Filter, X } from "lucide-react"
 
-const themes = [
-  "Neuromorphic Hardware",
-  "In-memory Computing",
-  "Associative Computing",
-  "Quantization",
-  "SNN",
-  "Quantum Computing",
-  "EDA-adjacent",
-]
-
-const statuses = ["Active", "Completed", "Ongoing", "Planned"]
-
-export function ResearchFilters({ onChange }: { onChange?: (filters: { themes: string[]; statuses: string[] }) => void }) {
+export function ResearchFilters({
+  onChange,
+  availableThemes = [],
+  availableStatuses = [],
+  availableYears = [],
+}: {
+  onChange?: (filters: { themes: string[]; statuses: string[]; years: string[] }) => void
+  availableThemes: string[]
+  availableStatuses: string[]
+  availableYears?: string[]
+}) {
   const [selectedThemes, setSelectedThemes] = useState<string[]>([])
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
+  const [selectedYears, setSelectedYears] = useState<string[]>([])
 
   const toggleTheme = (theme: string) => {
-    setSelectedThemes((prev) => {
-      const next = prev.includes(theme) ? prev.filter((t) => t !== theme) : [...prev, theme]
-      onChange?.({ themes: next, statuses: selectedStatuses })
-      return next
-    })
+    setSelectedThemes((prev) => (prev.includes(theme) ? prev.filter((t) => t !== theme) : [...prev, theme]))
   }
 
   const toggleStatus = (status: string) => {
-    setSelectedStatuses((prev) => {
-      const next = prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
-      onChange?.({ themes: selectedThemes, statuses: next })
-      return next
-    })
+    setSelectedStatuses((prev) => (prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]))
   }
 
   const clearAllFilters = () => {
     setSelectedThemes([])
     setSelectedStatuses([])
-    onChange?.({ themes: [], statuses: [] })
+    setSelectedYears([])
+    onChange?.({ themes: [], statuses: [], years: [] })
   }
 
-  const hasActiveFilters = selectedThemes.length > 0 || selectedStatuses.length > 0
+  const hasActiveFilters = selectedThemes.length > 0 || selectedStatuses.length > 0 || selectedYears.length > 0
 
+  // Notify parent after state updates, not during render/event setState callbacks
   useEffect(() => {
-    onChange?.({ themes: selectedThemes, statuses: selectedStatuses })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    onChange?.({ themes: selectedThemes, statuses: selectedStatuses, years: selectedYears })
+  }, [selectedThemes, selectedStatuses, selectedYears, onChange])
 
   return (
     <div className="space-y-6">
@@ -70,7 +62,7 @@ export function ResearchFilters({ onChange }: { onChange?: (filters: { themes: s
           <div className="space-y-2">
             <label className="text-sm font-medium text-muted-foreground">Research Themes</label>
             <div className="flex flex-wrap gap-2">
-              {themes.map((theme) => (
+              {availableThemes.map((theme) => (
                 <Button
                   key={theme}
                   variant={selectedThemes.includes(theme) ? "default" : "outline"}
@@ -87,7 +79,7 @@ export function ResearchFilters({ onChange }: { onChange?: (filters: { themes: s
           <div className="space-y-2">
             <label className="text-sm font-medium text-muted-foreground">Project Status</label>
             <div className="flex flex-wrap gap-2">
-              {statuses.map((status) => (
+              {availableStatuses.map((status) => (
                 <Button
                   key={status}
                   variant={selectedStatuses.includes(status) ? "default" : "outline"}
@@ -100,18 +92,39 @@ export function ResearchFilters({ onChange }: { onChange?: (filters: { themes: s
               ))}
             </div>
           </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">Year</label>
+            <div className="flex flex-wrap gap-2">
+              {availableYears.map((year) => (
+                <Button
+                  key={year}
+                  variant={selectedYears.includes(year) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() =>
+                    setSelectedYears((prev) => (prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]))
+                  }
+                  className={selectedYears.includes(year) ? "glow" : "bg-transparent"}
+                >
+                  {year}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       {hasActiveFilters && (
         <div className="flex flex-wrap gap-2">
-          {[...selectedThemes, ...selectedStatuses].map((filter) => (
+          {[...selectedThemes, ...selectedStatuses, ...selectedYears].map((filter) => (
             <Badge key={filter} variant="secondary" className="bg-accent/10 text-accent border-accent/20">
               {filter}
               <button
                 onClick={() => {
-                  if (themes.includes(filter)) toggleTheme(filter)
-                  else if (statuses.includes(filter)) toggleStatus(filter)
+                  if (availableThemes.includes(filter)) toggleTheme(filter)
+                  else if (availableStatuses.includes(filter)) toggleStatus(filter)
+                  else if (availableYears.includes(filter))
+                    setSelectedYears((prev) => prev.filter((y) => y !== filter))
                 }}
                 className="ml-1 hover:text-foreground"
               >

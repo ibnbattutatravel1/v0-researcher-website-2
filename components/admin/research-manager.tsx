@@ -110,6 +110,19 @@ export function ResearchManager() {
               <Input placeholder="Status" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} />
               <Input placeholder="Year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} />
             </div>
+            <Input
+              placeholder="Themes (comma separated)"
+              value={(form.themes ?? []).join(", ")}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  themes: e.target.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean),
+                })
+              }
+            />
             <Textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
             <Button onClick={create} disabled={creating} className="glow-hover">
               <Plus className="mr-2 h-4 w-4" />
@@ -165,6 +178,19 @@ export function ResearchManager() {
                           <Input placeholder="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} />
                           <Input placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
                         </div>
+                        <Input
+                          placeholder="Themes (comma separated)"
+                          value={(editForm.themes ?? []).join(", ")}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              themes: e.target.value
+                                .split(",")
+                                .map((s) => s.trim())
+                                .filter(Boolean),
+                            })
+                          }
+                        />
                         <Textarea placeholder="Description" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
                         <div className="flex items-center gap-2">
                           <Button size="sm" onClick={saveEdit}>Save</Button>
