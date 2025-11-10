@@ -35,18 +35,7 @@ export function ResearchBrowser({ projects }: { projects: Project[] }) {
     for (const p of normalized) {
       for (const t of (p as any).themes || []) set.add(String(t))
     }
-    const arr = Array.from(set)
-    if (arr.length === 0) {
-      return [
-        "Neuromorphic Hardware",
-        "In-memory Computing",
-        "Associative Computing",
-        "AI Hardware",
-        "SNN",
-        "Quantization",
-        "Quantum Computing",
-      ]
-    }
+    const arr = Array.from(set).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
     return arr
   }, [normalized])
 
