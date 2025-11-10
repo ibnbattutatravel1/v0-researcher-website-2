@@ -135,8 +135,8 @@ export function PatentsManager() {
               <Input placeholder="Status" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} />
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <Input placeholder="Filed Date" value={form.filedDate} onChange={(e) => setForm({ ...form, filedDate: e.target.value })} />
-              <Input placeholder="Granted Date" value={form.grantedDate} onChange={(e) => setForm({ ...form, grantedDate: e.target.value })} />
+              <Input type="date" placeholder="Filed Date" value={form.filedDate} onChange={(e) => setForm({ ...form, filedDate: e.target.value })} />
+              <Input type="date" placeholder="Granted Date" value={form.grantedDate} onChange={(e) => setForm({ ...form, grantedDate: e.target.value })} />
             </div>
             <Textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
             <Input placeholder="Co-inventors (comma separated)" value={(form.coInventors ?? []).join(", ")} onChange={(e) => setForm({ ...form, coInventors: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />
@@ -185,8 +185,8 @@ export function PatentsManager() {
                           <Input placeholder="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                          <Input placeholder="Filed Date" value={editForm.filedDate} onChange={(e) => setEditForm({ ...editForm, filedDate: e.target.value })} />
-                          <Input placeholder="Granted Date" value={editForm.grantedDate} onChange={(e) => setEditForm({ ...editForm, grantedDate: e.target.value })} />
+                          <Input type="date" placeholder="Filed Date" value={editForm.filedDate} onChange={(e) => setEditForm({ ...editForm, filedDate: e.target.value })} />
+                          <Input type="date" placeholder="Granted Date" value={editForm.grantedDate} onChange={(e) => setEditForm({ ...editForm, grantedDate: e.target.value })} />
                         </div>
                         <Textarea placeholder="Description" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
                         <Input placeholder="Co-inventors (comma separated)" value={(editForm.coInventors ?? []).join(", ")} onChange={(e) => setEditForm({ ...editForm, coInventors: e.target.value.split(",").map(s=>s.trim()).filter(Boolean) })} />

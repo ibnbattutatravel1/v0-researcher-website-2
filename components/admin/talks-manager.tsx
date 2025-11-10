@@ -131,7 +131,7 @@ export function TalksManager() {
             <Input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Venue" value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} />
-              <Input placeholder="Date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
+              <Input type="date" placeholder="Date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Type" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} />
@@ -185,7 +185,7 @@ export function TalksManager() {
                           <Input placeholder="Venue" value={editForm.venue} onChange={(e) => setEditForm({ ...editForm, venue: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
-                          <Input placeholder="Date" value={editForm.date} onChange={(e) => setEditForm({ ...editForm, date: e.target.value })} />
+                          <Input type="date" placeholder="Date" value={editForm.date} onChange={(e) => setEditForm({ ...editForm, date: e.target.value })} />
                           <Input placeholder="Type" value={editForm.type} onChange={(e) => setEditForm({ ...editForm, type: e.target.value })} />
                         </div>
                         <Input placeholder="Audience" value={editForm.audience} onChange={(e) => setEditForm({ ...editForm, audience: e.target.value })} />

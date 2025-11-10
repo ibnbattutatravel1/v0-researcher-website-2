@@ -116,7 +116,7 @@ export function AwardsManager() {
             <Input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Organization" value={form.organization} onChange={(e) => setForm({ ...form, organization: e.target.value })} />
-              <Input placeholder="Year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} />
+              <Input type="date" placeholder="Year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} />
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
@@ -158,7 +158,7 @@ export function AwardsManager() {
                         <Input placeholder="Title" value={editForm.title} onChange={(e) => setEditForm({ ...editForm, title: e.target.value })} />
                         <div className="grid grid-cols-2 gap-2">
                           <Input placeholder="Organization" value={editForm.organization} onChange={(e) => setEditForm({ ...editForm, organization: e.target.value })} />
-                          <Input placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
+                          <Input type="date" placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           <Input placeholder="Category" value={editForm.category} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} />

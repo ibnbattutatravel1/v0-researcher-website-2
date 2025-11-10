@@ -108,7 +108,7 @@ export function ResearchManager() {
             <Input placeholder="Role" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} />
             <div className="grid grid-cols-2 gap-2">
               <Input placeholder="Status" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} />
-              <Input placeholder="Year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} />
+              <Input type="date" placeholder="Year" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} />
             </div>
             <Input
               placeholder="Themes (comma separated)"
@@ -176,7 +176,7 @@ export function ResearchManager() {
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           <Input placeholder="Status" value={editForm.status} onChange={(e) => setEditForm({ ...editForm, status: e.target.value })} />
-                          <Input placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
+                          <Input type="date" placeholder="Year" value={editForm.year} onChange={(e) => setEditForm({ ...editForm, year: e.target.value })} />
                         </div>
                         <Input
                           placeholder="Themes (comma separated)"

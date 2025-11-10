@@ -14,6 +14,7 @@ import { ContactInbox } from "./contact-inbox"
 import { FileText, Beaker, Send as Sync, BarChart3 } from "lucide-react"
 
 export function AdminDashboard() {
+  const showAdvancedTabs = false
   return (
     <div className="space-y-8">
       <ContentStats />
@@ -52,14 +53,18 @@ export function AdminDashboard() {
             <FileText className="h-4 w-4" />
             <span>Contact Inbox</span>
           </TabsTrigger>
-          <TabsTrigger value="sync" className="flex items-center space-x-2 shrink-0">
-            <Sync className="h-4 w-4" />
-            <span>Scholar Sync</span>
-          </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center space-x-2 shrink-0">
-            <BarChart3 className="h-4 w-4" />
-            <span>Analytics</span>
-          </TabsTrigger>
+          {showAdvancedTabs && (
+            <TabsTrigger value="sync" className="flex items-center space-x-2 shrink-0">
+              <Sync className="h-4 w-4" />
+              <span>Scholar Sync</span>
+            </TabsTrigger>
+          )}
+          {showAdvancedTabs && (
+            <TabsTrigger value="analytics" className="flex items-center space-x-2 shrink-0">
+              <BarChart3 className="h-4 w-4" />
+              <span>Analytics</span>
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="settings">
@@ -94,16 +99,20 @@ export function AdminDashboard() {
           <ContactInbox />
         </TabsContent>
 
-        <TabsContent value="sync">
-          <ScholarSync />
-        </TabsContent>
+        {showAdvancedTabs && (
+          <TabsContent value="sync">
+            <ScholarSync />
+          </TabsContent>
+        )}
 
-        <TabsContent value="analytics">
-          <Card className="glass p-6">
-            <h3 className="text-lg font-semibold mb-4">Website Analytics</h3>
-            <p className="text-muted-foreground">Analytics integration coming soon...</p>
-          </Card>
-        </TabsContent>
+        {showAdvancedTabs && (
+          <TabsContent value="analytics">
+            <Card className="glass p-6">
+              <h3 className="text-lg font-semibold mb-4">Website Analytics</h3>
+              <p className="text-muted-foreground">Analytics integration coming soon...</p>
+            </Card>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   )
