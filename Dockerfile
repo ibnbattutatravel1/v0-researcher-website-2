@@ -3,7 +3,7 @@
 
 # 1) Builder: install deps (incl. dev), generate prisma client, and build next
 FROM node:20-bookworm-slim AS builder
-ENV NODE_ENV=development \
+ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1
 # Enable pnpm via corepack
 RUN corepack enable && apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
