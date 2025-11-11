@@ -30,6 +30,11 @@ ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000
 WORKDIR /app
+# Ensure OpenSSL and CA certificates are available at runtime for Prisma and HTTPS fetch
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    openssl \
+    ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy the standalone server (includes node_modules with production deps) and static assets
 COPY --from=builder /app/.next/standalone ./

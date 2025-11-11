@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { POST as syncScholarDb } from "@/app/api/sync-scholar-db/route"
 
 // This endpoint can be called by a cron job or webhook
 export async function POST() {
@@ -6,18 +7,15 @@ export async function POST() {
     const SCHOLAR_USER_ID = process.env.SCHOLAR_USER_ID || "1mr8HxoAAAAJ"
     console.log("[v0] Auto-sync triggered - syncing scholar -> DB")
 
-    // Trigger the DB sync
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/sync-scholar-db`, {
+    // Call the sync handler directly to avoid external HTTPS/TLS/network issues
+    const req = new Request("http://internal/api/sync-scholar-db", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: SCHOLAR_USER_ID }),
     })
-
+    const response = await syncScholarDb(req)
     const result = await response.json()
-
-    if (!response.ok) {
-      throw new Error(result.error || "Sync failed")
-    }
+    if (!("ok" in result) && result.error) throw new Error(result.error || "Sync failed")
 
     return NextResponse.json({
       message: "Publications DB updated successfully",
