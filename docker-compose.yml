@@ -13,6 +13,8 @@ services:
       NODE_ENV: production
       PORT: 3000
       VIRTUAL_PORT: 3000
+      NEXT_PUBLIC_BASE_URL: https://mefouda.me
+      VERCEL_URL: mefouda.me
       DATABASE_URL: "mysql://u744630877_mefouda:%23Mefoudamefouda123@srv557.hstgr.io/u744630877_mefouda?connection_limit=5&pool_timeout=30"
       # For nginx-proxy automatic SSL
       VIRTUAL_HOST: mefouda.me,www.mefouda.me
