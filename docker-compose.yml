@@ -1,4 +1,41 @@
+version: "3.8"
+
 services:
+
+  # ===== Nginx Proxy =====
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:1.6
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+    networks:
+      - proxy
+
+  # ===== ACME Companion =====
+  acme-companion:
+    image: nginxproxy/acme-companion:2.4
+    container_name: acme-companion
+    restart: unless-stopped
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+    environment:
+      NGINX_PROXY_CONTAINER: nginx-proxy
+    networks:
+      - proxy
+
+  # ===== Web Application =====
   web:
     build:
       context: .
@@ -16,3 +53,14 @@ services:
     networks:
       - proxy
     restart: unless-stopped
+
+# ===== Volumes for certificates & configs =====
+volumes:
+  nginx_certs:
+  nginx_vhost:
+  nginx_html:
+
+# ===== Shared network =====
+networks:
+  proxy:
+    external: true
